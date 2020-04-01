@@ -31,6 +31,13 @@
     },
     "api-interfaces": {
       "tags": []
+    },
+    "client-app": {
+      "tags": []
+    },
+    "client-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["client-app"]
     }
   }
 }
