@@ -1,20 +1,28 @@
 /**
  * This is not a production server yet!
  * This is only a minimal backend to get started.
- */
+ **/
 
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
+import * as helmet from 'helmet';
+
+// somewhere in your initialization file
+
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
-  const port = process.env.port || 3333;
-  await app.listen(port, () => {
-    console.log('Listening at http://localhost:' + port + '/' + globalPrefix);
-  });
+    const app = await NestFactory.create(AppModule);
+    const globalPrefix = 'api';
+    app.setGlobalPrefix(globalPrefix);
+
+    app.use(helmet());
+    app.enableCors();
+
+    const port = process.env.port || 3333;
+    await app.listen(port, () => {
+        console.log('Listening at http://localhost:' + port + '/' + globalPrefix);
+    });
 }
 
 bootstrap();

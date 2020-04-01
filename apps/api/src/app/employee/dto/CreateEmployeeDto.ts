@@ -1,0 +1,51 @@
+import { IsEmail, IsEnum, IsInt, IsNotEmpty } from 'class-validator';
+import { Gender, UserType } from '@tin-mini-projects/api-interfaces';
+
+export class CreateEmployeeDto {
+    @IsNotEmpty()
+    readonly firstName: string;
+
+    @IsNotEmpty()
+    readonly lastName: string;
+
+    @IsEmail()
+    readonly email: string;
+
+    @IsNotEmpty()
+    readonly password: string;
+
+    @IsNotEmpty()
+    readonly city: string;
+
+    @IsNotEmpty()
+    readonly country: string;
+
+    @IsEnum(Gender)
+    readonly gender: Gender;
+
+    @IsNotEmpty()
+    readonly numberOfBuilding: string;
+
+    @IsNotEmpty()
+    readonly phoneNumber: string;
+
+    @IsNotEmpty()
+    readonly postalCode: string;
+
+    @IsNotEmpty()
+    readonly street: string;
+
+    @IsNotEmpty()
+    readonly area: string;
+
+    @IsNotEmpty()
+    readonly type: UserType;
+
+    @IsNotEmpty()
+    @IsInt()
+    readonly restaurantId: number;
+
+    @IsNotEmpty()
+    @IsInt()
+    readonly ratePerHours: number;
+}
