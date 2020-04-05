@@ -1,0 +1,30 @@
+<ng-container
+    *ngIf="(tables$ | async).length > 0; else empty"
+>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">Ilość osób</th>
+            <th scope="col">Akcja</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let table of (tables$ | async); let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{ table.name }}</td>
+            <td>{{ table.maxPeopleCount }}</td>
+            <td><a [routerLink]="[table.id, 'edit']">Edit</a></td>
+        </tr>
+        </tbody>
+    </table>
+</ng-container>
+
+<ng-template #empty>
+    <tin-alert
+        [type]="AlertType.PRIMARY"
+        [message]="'Nie posiadasz żadnych stołów.'"
+    ></tin-alert>
+</ng-template>

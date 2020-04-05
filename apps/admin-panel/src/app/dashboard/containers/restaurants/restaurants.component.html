@@ -1,0 +1,50 @@
+<section
+    class="section-name">
+    <div class="container">
+        <header class="section-heading">
+            <h3 class="section-title">Lista restauracji</h3>
+        </header>
+
+        <div class="row mb-4">
+            <div class="col-sm-12">
+                <form class="search">
+                    <div class="input-group w-100">
+                        <input type="text" class="form-control" placeholder="Search" [formControl]="restaurantsSearchControl"/>
+
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!-- search-wrap .end// -->
+            </div>
+            <!-- col.// -->
+        </div>
+
+        <div
+            *ngIf="(restaurants$ | async).length > 0; else empty"
+            class="restaurants row">
+            <div class="col-md-3"
+                 *ngFor="let restaurant of (restaurants$ | async)">
+                <div class="card card-product-grid">
+                    <a (click)="showRestaurant(restaurant.id)" class="img-wrap"> <img src="{{ restaurant.logoUrl }}" /> </a>
+
+                    <figcaption class="info-wrap">
+                        <a href="#" class="title">{{ restaurant.name }}</a>
+                    </figcaption>
+
+<!--                    <span class="badge badge-success">{{ restaurant.category.name }}</span>-->
+                </div>
+            </div>
+            <!-- col.// -->
+        </div>
+    </div>
+    <!-- container // -->
+</section>
+
+<ng-template #empty>
+    <tin-alert [type]="AlertType.PRIMARY" [message]="'Brak obecnie restauracji.'"> </tin-alert>
+</ng-template>
+

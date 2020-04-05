@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from '../user/user.entity';
 import { TableEntity } from '../table/table.entity';
 import { RestaurantEntity } from '../restaurant/restaurant.entity';
-import { ReservationStatus } from '@tin-mini-projects/api-interfaces';
+import { ReservationStatus } from '@bon-appetit/interfaces';
 
 @Entity('reservation')
 export class ReservationEntity {

@@ -1,0 +1,120 @@
+<section *ngIf="formStatus$ | async as formStatus" class="section-content">
+    <tin-alert *ngIf="formStatus.success" [type]="AlertType.SUCCESS" [message]="'Danie zostało dodane'"> </tin-alert>
+
+    <tin-alert *ngIf="formStatus.error" [type]="AlertType.DANGER" [message]="'Operacja nie powiodła sie, sprobuj wysłac ponownie formularz. Jezeli problem dalej wystepuje, zglos to do administracji!!'"> </tin-alert>
+
+    <div class="card mx-auto">
+        <article class="card-body">
+            <header class="mb-4"><h4 class="card-title">Formularz edycji dania</h4></header>
+
+            <form [formGroup]="editDishForm" (ngSubmit)="onSubmit()" novalidate>
+                <div class="form-row">
+                    <div class="col form-group" [ngClass]="editDishForm.controls['name'].dirty ? 'was-validated' : null">
+                        <label>Nazwa dania<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="name" required maxlength="30" minlength="3" />
+
+                        <div
+                            *ngIf="
+                                editDishForm.controls['name'].invalid &&
+                                (editDishForm.controls['name'].dirty || editDishForm.controls['name'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="editDishForm.controls['name'].errors.required">
+                                Nazwa dania jest wymagana.
+                            </div>
+
+                            <div *ngIf="editDishForm.controls['name'].errors.minlength">
+                                Nazwa dania musi zawierać więcej niż 3 znaki.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col form-group" [ngClass]="editDishForm.controls['imageUrl'].dirty ? 'was-validated' : null">
+                        <label>Link do zdjęcia dania<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="imageUrl" required
+                               placeholder="https://example.com/logo.jpg"
+                        />
+
+                        <div
+                            *ngIf="
+                                editDishForm.controls['imageUrl'].invalid &&
+                                (editDishForm.controls['imageUrl'].dirty || editDishForm.controls['imageUrl'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="editDishForm.controls['imageUrl'].errors.required">
+                                Link do zdjecia dania jest wymagane.
+                            </div>
+
+                            <div *ngIf="editDishForm.controls['imageUrl'].errors.pattern">
+                                Link jest nie poprawny. Pamiętaj, że link musi mieć końcówkę .jpg lub .png.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6" [ngClass]="editDishForm.controls['price'].dirty ? 'was-validated' : null">
+                        <label>Cena<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="price" required
+                               placeholder="0.00"
+                        />
+
+                        <div
+                            *ngIf="
+                                editDishForm.controls['price'].invalid &&
+                                (editDishForm.controls['price'].dirty || editDishForm.controls['price'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="editDishForm.controls['price'].errors.required">
+                                Cena jest wymagane.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6" [ngClass]="editDishForm.controls['template'].dirty ? 'was-validated' : null">
+                        <label>Szablon<span class="required">*</span></label>
+                        <select class="form-control" formControlName="template">
+                            <option disabled>Wybierz...</option>
+                            <option *ngFor="let template of (templates$ | async)" [value]="template.template">{{ template.template }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-8 form-group"
+                        formArrayName="ingredients"
+                         *ngFor="let ingredient of editDishForm.get('ingredients').controls; let i = index;">
+                        <div [formGroupName]="i">
+                            <input
+                                class="form-control"
+                                formControlName="name"
+                                placeholder="Nazwa składnika">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button
+                            (click)="addIngredients()"
+                            type="button" class="btn btn-primary d-inline-block mr-2">
+                            <i class="fa fa-plus-circle"></i>
+                        </button>
+
+                        <button
+                            *ngIf="ingredients.length > 1"
+                            (click)="removeIngredients()"
+                            type="button" class="btn btn-danger d-inline-block">
+                            <i class="fa fa-minus-circle"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Edytuj danie</button>
+                </div>
+            </form>
+        </article>
+    </div>
+</section>

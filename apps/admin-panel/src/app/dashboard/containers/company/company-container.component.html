@@ -1,0 +1,80 @@
+<ng-container
+    *ngIf="(company$ | async)?.id; else empty">
+    <article
+        *ngIf="(company$ | async) as company"
+        class="card mb-3">
+        <div class="card-body">
+            <figure class="icontext">
+                <div class="icon">
+                    <img class="rounded-circle img-sm border" src="{{ company.logoUrl }}" alt="avatar">
+                </div>
+
+                <div class="text">
+                    <strong class="text-primary">{{ company.name }}</strong> <br>
+
+                    <ul class="list-group">
+                        <li class="list-unstyled">Email: <strong>{{ company.email }}</strong></li>
+                        <li class="list-unstyled">Telefon: <strong>{{ company.phoneNumber }}</strong></li>
+                    </ul>
+                </div>
+            </figure>
+
+            <hr/>
+            <div class="row mt-4 border-top-2">
+                <div class="col-md-6">
+                    <div class="block">
+                        <h5>
+                            <i class="fa fa-map-marker text-muted"></i> &nbsp;
+                            Adres:
+                        </h5>
+
+                        <ul>
+                            <li>Państwo: <strong>{{ company.country }}</strong></li>
+                            <li>Miasto: <strong>{{ company.city }}</strong></li>
+                            <li>Ulica: <strong>{{ company.street }}</strong></li>
+                            <li>Number mieszkania: <strong>{{ company.numberOfBuilding }}</strong></li>
+                            <li>Kod pocztowy: <strong>{{ company.postalCode }}</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <article class="card-group">
+                <figure class="card bg">
+                    <div class="p-3">
+                        <h5 class="card-title">38</h5>
+                        <span>Restauracje</span>
+                    </div>
+                </figure>
+
+                <figure class="card bg">
+                    <div class="p-3">
+                        <h5 class="card-title">5</h5>
+                        <span>Pracownicy</span>
+                    </div>
+                </figure>
+                <figure class="card bg">
+                    <div class="p-3">
+                        <h5 class="card-title">12</h5>
+                        <span>Zamówienia</span>
+                    </div>
+                </figure>
+                <figure class="card bg">
+                    <div class="p-3">
+                        <h5 class="card-title">50</h5>
+                        <span>Pieniądze</span>
+                    </div>
+                </figure>
+            </article>
+        </div>
+        <!-- card-body .// -->
+    </article>
+    <!-- card.// -->
+</ng-container>
+
+<ng-template #empty>
+    <tin-alert
+        [type]="AlertType.PRIMARY"
+        [message]="'Nie ma takiej firmy'"
+    ></tin-alert>
+</ng-template>

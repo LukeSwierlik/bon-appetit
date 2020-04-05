@@ -1,0 +1,50 @@
+<section
+    class="section-name padding-y-sm">
+    <div class="container">
+        <header class="section-heading">
+            <button type="button" class="btn btn-outline-primary float-right" (click)="resetFilter()">Pokaż wszystkie</button>
+            <h3 class="section-title">Najnowsze restauracje</h3>
+        </header>
+
+        <div class="row">
+            <aside class="col-md-3  col-sm-6">
+                <output>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Filter</h5>
+
+                            <select class="form-control" formControlName="area" (change)="filter($event.target.value)">
+                                <option disabled>Wybierz...</option>
+                                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- card.// -->
+                </output>
+            </aside>
+
+            <div class="col-md-9">
+                <div *ngIf="restaurants.length > 0; else emptyRestaurants" class="row">
+                    <div class="col-md-4" *ngFor="let restaurant of restaurants">
+                        <div class="card card-product-grid">
+                            <a [routerLink]="['restaurant', restaurant?.id]" class="img-wrap"> <img src="{{ restaurant?.logoUrl }}" /> </a>
+
+                            <figcaption class="info-wrap">
+                                <h5><a [routerLink]="['restaurant', restaurant?.id]" class="title">{{ restaurant?.name }}</a></h5>
+                            </figcaption>
+
+
+                        </div>
+                    </div>
+                    <!-- col.// -->
+                </div>
+                <!-- row.// -->
+            </div>
+        </div>
+    </div>
+    <!-- container // -->
+</section>
+
+<ng-template #emptyRestaurants>
+    <tin-alert [type]="AlertType.PRIMARY" [message]="'Brak obecnie restauracji.'"> </tin-alert>
+</ng-template>

@@ -1,0 +1,9 @@
+<ng-container
+    *ngIf="(user$ | async) as user"
+>
+    <tin-title
+        [title]="'Informacje o profilu:' + ' ' + user.firstName + ' ' + user.lastName"
+    ></tin-title>
+
+    <tin-sidebar-user></tin-sidebar-user>
+</ng-container>

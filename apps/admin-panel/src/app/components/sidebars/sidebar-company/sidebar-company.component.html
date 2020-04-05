@@ -1,0 +1,60 @@
+<section class="section-content padding-y">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-3">
+                <div class="button-list mb-3 pb-3">
+                    <a
+                        [routerLink]="['/users']"
+                        class="btn btn-outline-success btn-block"
+                    >
+                        <i class="fa fa-user-friends"></i>
+                        <span class="text">Lista użytkowników</span>
+                    </a>
+
+                    <a
+                        [routerLink]="['/restaurants']"
+                        class="btn btn-outline-warning btn-block"
+                    >
+                        <i class="fa fa-briefcase"></i>
+                        <span class="text">Lista restauracji</span>
+                    </a>
+                </div>
+
+                <ng-container
+                    *ngIf="(userRole$ | async)?.id === 6"
+                >
+                    <br />
+
+                    <a
+                        *ngIf="!(companyId$ | async)"
+                        [routerLink]="['create-company']"
+                        class="btn btn-success btn-block">
+                        <i class="fa fa-briefcase"></i>
+                        <span class="text">Utwórz firmę</span>
+                    </a>
+
+                    <a
+                        [routerLink]="['create-restaurant']"
+                        class="btn btn-secondary btn-block">
+                        <i class="fa fa-briefcase"></i>
+                        <span class="text">Utwórz restauracje</span>
+                    </a>
+                </ng-container>
+
+                <a
+                    *ngIf="(restaurants$ | async).length"
+                    [routerLink]="['restaurants']"
+                    class="btn btn-warning btn-block">
+                    <i class="fa fa-briefcase"></i>
+                    <span class="text">Lista restauracji</span>
+                </a>
+            </aside>
+            <!-- col.// -->
+
+            <main class="col-md-9">
+                <router-outlet></router-outlet>
+            </main>
+        </div>
+    </div>
+    <!-- container .//  -->
+</section>

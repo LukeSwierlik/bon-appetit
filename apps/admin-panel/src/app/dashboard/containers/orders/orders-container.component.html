@@ -1,0 +1,113 @@
+<tin-title [title]="'Zamówienia'"> </tin-title>
+
+<section class="section-content padding-y">
+    <div class="container">
+        <div class="row">
+            <main
+                [ngClass]="(paid$ | async) ? 'col-md-12' : 'col-md-9'"
+                >
+                <div class="card">
+                    <table class="table table-borderless table-shopping-cart">
+                        <thead class="text-muted">
+                            <tr class="small text-uppercase">
+                                <th scope="col">Danie</th>
+                                <th scope="col" width="120">Ilość</th>
+                                <th scope="col" width="120">Cena</th>
+                                <th scope="col" class="text-right" width="200"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let order of orders$ | async">
+                                <td>
+                                    <figure class="itemside">
+                                        <div class="aside"><img src="{{ order.dish?.imageUrl }}" class="img-sm" /></div>
+
+                                        <figcaption class="info">
+                                            <a href="#" class="title text-dark">{{ order.dish?.name }}</a>
+                                            <p class="text-muted small">
+                                                Status:
+                                                <b [ngClass]="(paid$ | async) ? 'text-success' : 'text-danger'"
+                                            > {{ order.status }}</b>
+                                            </p>
+                                        </figcaption>
+                                    </figure>
+                                </td>
+                                <td>
+                                    <div class="form-row">
+                                        <div class="form-group col-md flex-grow-0">
+                                            <div
+                                                *ngIf="!(paid$ | async); else count"
+                                                class="input-group input-spinner">
+                                                <div
+                                                    class="input-group-prepend">
+                                                    <button class="btn btn-light" id="button-plus" type="button">+</button>
+                                                </div>
+
+                                                <input
+                                                    [value]="order.count"
+                                                    class="form-control" type="text" />
+
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-light" id="button-minus" type="button">−</button>
+                                                </div>
+                                            </div>
+
+                                            <ng-template #count>
+                                                <span class="text-center">{{ order.count }}</span>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="price-wrap">
+                                        <var class="price">${{ order.sumPriceDish }}</var>
+                                        <small class="text-muted"> ${{ order.dish.price }} za sztukę </small>
+                                    </div>
+                                    <!-- price-wrap .// -->
+                                </td>
+
+                                <td
+                                    [ngClass]="(paid$ | async) ? 'd-none' : null"
+                                    class="text-right">
+                                    <button
+                                        (click)="removeOrder(order.id)"
+                                        class="btn btn-danger">Usuń</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="card-body border-top">
+                        <button
+                            [ngClass]="(paid$ | async) ? 'd-none' : null"
+                            (click)="payOrders()"
+                            type="button"
+                            class="btn btn-primary float-md-right">
+                            Zapłać <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- card.// -->
+
+            </main>
+            <!-- col.// -->
+
+            <aside
+                [ngClass]="(paid$ | async) ? 'd-none' : null"
+                class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dlist-align">
+                            <dt>Suma do zapłaty:</dt>
+                            <dd class="text-right  h5"><strong>{{ getSumOrders$ | async }}zł</strong></dd>
+                        </dl>
+                    </div>
+                    <!-- card-body.// -->
+                </div>
+                <!-- card .// -->
+            </aside>
+            <!-- col.// -->
+        </div>
+    </div>
+    <!-- container .//  -->
+</section>

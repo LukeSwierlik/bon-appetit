@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum, IsInt, IsNotEmpty } from 'class-validator';
-import { Gender, UserType } from '@tin-mini-projects/api-interfaces';
+import { Gender, UserType } from '@bon-appetit/interfaces';
 
 export class CreateEmployeeDto {
     @IsNotEmpty()

@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@bon-appetit/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@bon-appetit/interfaces": ["libs/interfaces/src/index.ts"],
+      "@bon-appetit/resources": ["libs/resources/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

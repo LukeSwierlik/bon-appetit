@@ -1,0 +1,123 @@
+<section class="section-content padding-y">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-3">
+                <div class="button-list mb-3 pb-3">
+                    <a
+                        [routerLink]="['/users']"
+                        class="btn btn-success btn-block"
+                    >
+                        <i class="fa fa-user-friends"></i>
+                        <span class="text">Lista użytkowników</span>
+                    </a>
+
+                    <a
+                        [routerLink]="['/restaurants']"
+                        class="btn btn-warning btn-block"
+                    >
+                        <i class="fa fa-briefcase"></i>
+                        <span class="text">Lista restauracji</span>
+                    </a>
+                </div>
+
+                <ul
+                    *ngIf="(restaurantId$ | async) as restaurantId"
+                    class="list-group">
+                    <a
+                        [routerLink]="['/company/restaurants', restaurantId]"
+                        [routerLinkActive]="['active']"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="list-group-item"
+                    >Informacje o restrauracji</a>
+
+                    <a
+                        [routerLink]="['employees']"
+                        [routerLinkActive]="['active']"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="list-group-item"
+                    >Pracownicy</a>
+
+                    <a
+                        [routerLink]="['orders']"
+                        [routerLinkActive]="['active']"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="list-group-item"
+                    >Zamówienia</a>
+
+                    <a
+                        [routerLink]="['reservations']"
+                        [routerLinkActive]="['active']"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="list-group-item"
+                    >Rezerwacje</a>
+
+                    <a
+                        [routerLink]="['tables']"
+                        [routerLinkActive]="['active']"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="list-group-item"
+                    >Stoły</a>
+
+                    <a
+                        [routerLink]="['dishes']"
+                        [routerLinkActive]="['active']"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="list-group-item"
+                    >Dania</a>
+                </ul>
+
+                <ng-container
+                    *ngIf="(userRole$ | async)?.id === 6"
+                >
+                    <br />
+
+                    <a
+                        *ngIf="!(companyId$ | async)"
+                        [routerLink]="['create-company']"
+                        class="btn btn-success btn-block">
+                        <i class="fa fa-briefcase"></i>
+                        <span class="text">Utwórz firmę</span>
+                    </a>
+
+                    <a
+                        *ngIf="(companyId$ | async)"
+                        [routerLink]="['create-restaurant']"
+                        class="btn btn-success btn-block">
+                        <i class="fa fa-building"></i>
+                        <span class="text">Utwórz restauracje</span>
+                    </a>
+
+                    <a
+                        *ngIf="(selectedRestaurant$ | async) !== 0"
+                        [routerLink]="['create-dishes']"
+                        class="btn btn-secondary btn-block">
+                        <i class="fa fa-hamburger"></i>
+                        <span class="text">Utwórz danie</span>
+                    </a>
+
+                    <a
+                        *ngIf="(selectedRestaurant$ | async) !== 0"
+                        [routerLink]="['create-employee']"
+                        class="btn btn-warning btn-block">
+                        <i class="fa fa-user"></i>
+                        <span class="text">Utwórz pracownika</span>
+                    </a>
+
+                    <a
+                        *ngIf="(selectedRestaurant$ | async) !== 0"
+                        [routerLink]="['create-table']"
+                        class="btn btn-dark btn-block">
+                        <i class="fa fa-table"></i>
+                        <span class="text">Utwórz stół</span>
+                    </a>
+                </ng-container>
+            </aside>
+            <!-- col.// -->
+
+            <main class="col-md-9">
+                <router-outlet></router-outlet>
+            </main>
+        </div>
+    </div>
+    <!-- container .//  -->
+</section>

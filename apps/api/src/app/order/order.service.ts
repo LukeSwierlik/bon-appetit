@@ -8,7 +8,7 @@ import { UserEntity } from '../user/user.entity';
 import { AddNewOrderDto } from './dto/AddNewOrderDto';
 import { PayOrdersDto } from './dto/PayOrdersDto';
 import { ChangeOrderStatusDto } from './dto/ChangeOrderStatusDto';
-import { OrderStatus } from '@tin-mini-projects/api-interfaces';
+import { OrderStatus } from '@bon-appetit/interfaces';
 
 @Injectable()
 export class OrderService {

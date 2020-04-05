@@ -1,0 +1,49 @@
+<ng-container *ngIf="restaurant$ | async as restaurant">
+    <article class="card card-product-list">
+        <div class="row no-gutters">
+            <aside class="col-md-3">
+                <a href="#" class="img-wrap">
+                    <img src="{{ restaurant.logoUrl }}" alt="{{ restaurant.name }}"/>
+                </a>
+            </aside>
+
+            <!-- col.// -->
+            <div class="col-md-6">
+                <div class="info-main">
+                    <a href="#" class="h5 title"> {{ restaurant.name }} </a>
+                    <div class="block">
+                        <h6 class="text-muted">Adres:</h6>
+
+                        <ul>
+                            <li>Miasto: <strong>{{ restaurant.city }}</strong></li>
+                            <li>Ulica: <strong>{{ restaurant.street }}</strong></li>
+                            <li>Number budynku: <strong>{{ restaurant.numberOfBuilding }}</strong></li>
+                            <li>Kod pocztowy: <strong>{{ restaurant.postalCode }}</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- info-main.// -->
+            </div>
+
+            <aside class="col-sm-3">
+                <div class="info-aside">
+                    <p>
+                        <a [routerLink]="['edit']" class="btn btn-primary btn-block mb-2"> Edytuj </a>
+                    </p>
+
+                    <button
+                        (click)="removeRestaurant(restaurant.id)"
+                        type="button" class="btn btn-danger btn-block"> Usuń </button>
+
+                    <a *ngIf="(selectedCompaniesId$ | async) as selectedCompaniesId"
+                        [routerLink]="['/companies', selectedCompaniesId, 'details']"
+                       class="btn btn-warning btn-block mb-2"> O Firmie </a>
+                </div>
+                <!-- info-aside.// -->
+            </aside>
+            <!-- col.// -->
+        </div>
+        <!-- row.// -->
+    </article>
+    <!-- card-product .// -->
+</ng-container>

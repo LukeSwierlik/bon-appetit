@@ -1,0 +1,7 @@
+<tin-hero></tin-hero>
+<tin-special-cards></tin-special-cards>
+<tin-products
+    *ngIf="(restaurants$ | async).length > 0"
+    [restaurants]="restaurants$ | async"
+    [categories]="categories$ | async"
+></tin-products>

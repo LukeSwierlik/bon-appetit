@@ -1,0 +1,61 @@
+<section class="section-content padding-y">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-3">
+                <tin-sidebar-user></tin-sidebar-user>
+
+                <ng-container
+                    *ngIf="(userRole$ | async)?.id === 6"
+                >
+                    <br />
+
+                    <a
+                        *ngIf="!(companyId$ | async)"
+                        [routerLink]="['create-company']"
+                       class="btn btn-success btn-block">
+                            <i class="fa fa-briefcase"></i>
+                            <span class="text">Utwórz firmę</span>
+                    </a>
+
+                    <a
+                        *ngIf="(companyId$ | async)"
+                        [routerLink]="['create-restaurant']"
+                        class="btn btn-success btn-block">
+                        <i class="fa fa-building"></i>
+                        <span class="text">Utwórz restauracje</span>
+                    </a>
+
+                    <a
+                        *ngIf="(selectedRestaurant$ | async) !== 0"
+                        [routerLink]="['create-dishes']"
+                        class="btn btn-secondary btn-block">
+                        <i class="fa fa-hamburger"></i>
+                        <span class="text">Utwórz danie</span>
+                    </a>
+
+                    <a
+                        *ngIf="(selectedRestaurant$ | async) !== 0"
+                        [routerLink]="['create-employee']"
+                        class="btn btn-warning btn-block">
+                        <i class="fa fa-user"></i>
+                        <span class="text">Utwórz pracownika</span>
+                    </a>
+
+                    <a
+                        *ngIf="(selectedRestaurant$ | async) !== 0"
+                        [routerLink]="['create-table']"
+                        class="btn btn-dark btn-block">
+                        <i class="fa fa-table"></i>
+                        <span class="text">Utwórz stół</span>
+                    </a>
+                </ng-container>
+            </aside>
+            <!-- col.// -->
+
+            <main class="col-md-9">
+                <router-outlet></router-outlet>
+            </main>
+        </div>
+    </div>
+    <!-- container .//  -->
+</section>

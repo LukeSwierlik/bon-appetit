@@ -1,0 +1,310 @@
+<ng-container *ngIf="restaurant$ | async as restaurant">
+    <section *ngIf="formStatus$ | async as formStatus" class="section-content">
+        <tin-alert *ngIf="formStatus.success" [type]="AlertType.SUCCESS" [message]="'Rejestracja powiodła się! Możesz się zalogować!'"> </tin-alert>
+
+        <tin-alert *ngIf="formStatus.error" [type]="AlertType.DANGER" [message]="'Operacja nie powiodła sie, sprobuj wysłac ponownie formularz. Jezeli problem dalej wystepuje, zglos to do administracji!!'"> </tin-alert>
+
+        <div class="card mx-auto">
+            <article class="card-body">
+                <header class="mb-4"><h4 class="card-title">Edycja restauracji</h4></header>
+
+                <form [formGroup]="editRestaurantForm" (ngSubmit)="onSubmit()" novalidate>
+                    <div class="form-row">
+                        <div class="col form-group" [ngClass]="editRestaurantForm.controls['name'].dirty ? 'was-validated' : null">
+                            <label>Nazwa restauracji<span class="required">*</span></label>
+                            <input
+                                [value]="restaurant.name"
+                                type="text"
+                                class="form-control"
+                                formControlName="name"
+                                required
+                                maxlength="30"
+                                minlength="3" />
+
+                            <div
+                                *ngIf="
+                                    editRestaurantForm.controls['name'].invalid &&
+                                    (editRestaurantForm.controls['name'].dirty || editRestaurantForm.controls['name'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="editRestaurantForm.controls['name'].errors.required">
+                                    Nazwa restauracji jest wymagana.
+                                </div>
+
+                                <div *ngIf="editRestaurantForm.controls['name'].errors.minlength">
+                                    Nazwa restauracji musi zawierać więcej niż 3 znaki.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col form-group" [ngClass]="editRestaurantForm.controls['logoUrl'].dirty ? 'was-validated' : null">
+                            <label>Link do Loga firmy<span class="required">*</span></label>
+                            <input
+                                [value]="restaurant.logoUrl"
+                                type="text"
+                                class="form-control"
+                                formControlName="logoUrl"
+                                placeholder="https://example.com/logo.jpg"
+                                required  />
+                            <div
+                                *ngIf="
+                                    editRestaurantForm.controls['logoUrl'].invalid &&
+                                    (editRestaurantForm.controls['logoUrl'].dirty || editRestaurantForm.controls['logoUrl'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="editRestaurantForm.controls['logoUrl'].errors.required">
+                                    Link do loga firmy jest wymagane.
+                                </div>
+
+                                <div *ngIf="editRestaurantForm.controls['logoUrl'].errors.pattern">
+                                    Link jest nie poprawny. Pamiętaj, że link musi mieć końcówkę .jpg lub .png.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 form-group" [ngClass]="editRestaurantForm.controls['heroUrl'].dirty ? 'was-validated' : null">
+                            <label>Link do Hero firmy<span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="heroUrl" required placeholder="https://example.com/logo.jpg" />
+
+                            <div
+                                *ngIf="
+                                    editRestaurantForm.controls['heroUrl'].invalid &&
+                                    (editRestaurantForm.controls['heroUrl'].dirty || editRestaurantForm.controls['heroUrl'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="editRestaurantForm.controls['heroUrl'].errors.required">
+                                    Link do hero firmy jest wymagane.
+                                </div>
+
+                                <div *ngIf="editRestaurantForm.controls['heroUrl'].errors.pattern">
+                                    Link jest nie poprawny. Pamiętaj, że link musi mieć końcówkę .jpg lub .png.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 form-group" [ngClass]="editRestaurantForm.controls['thumbnailUrl'].dirty ? 'was-validated' : null">
+                            <label>Link do miniaturki<span class="required">*</span></label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                formControlName="thumbnailUrl"
+                                required
+                                placeholder="https://example.com/logo.jpg"
+                            />
+
+                            <div
+                                *ngIf="
+                                    editRestaurantForm.controls['thumbnailUrl'].invalid &&
+                                    (editRestaurantForm.controls['thumbnailUrl'].dirty || editRestaurantForm.controls['thumbnailUrl'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="editRestaurantForm.controls['thumbnailUrl'].errors.required">
+                                    Link do miniaturki jest wymagane.
+                                </div>
+
+                                <div *ngIf="editRestaurantForm.controls['thumbnailUrl'].errors.pattern">
+                                    Link jest nie poprawny. Pamiętaj, że link musi mieć końcówkę .jpg lub .png.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 form-group" [ngClass]="editRestaurantForm.controls['websiteUrl'].dirty ? 'was-validated' : null">
+                            <label>Link do websiteUrl<span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="websiteUrl" required placeholder="https://example.com" />
+
+                            <div
+                                *ngIf="
+                                    editRestaurantForm.controls['websiteUrl'].invalid &&
+                                    (editRestaurantForm.controls['websiteUrl'].dirty || editRestaurantForm.controls['websiteUrl'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="editRestaurantForm.controls['websiteUrl'].errors.required">
+                                    Link do miniaturki jest wymagane.
+                                </div>
+
+                                <div *ngIf="editRestaurantForm.controls['websiteUrl'].errors.pattern">
+                                    Link jest nie poprawny. Pamiętaj, że link musi mieć końcówkę .jpg lub .png.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="editRestaurantForm.controls['email'].dirty ? 'was-validated' : null">
+                            <label>Email<span class="required">*</span></label>
+                            <input type="email" class="form-control" formControlName="email" required maxlength="30" minlength="5" />
+
+                            <div
+                                *ngIf="
+                                    editRestaurantForm.controls['email'].invalid &&
+                                    (editRestaurantForm.controls['email'].dirty || editRestaurantForm.controls['email'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="editRestaurantForm.controls['email'].errors.required">
+                                    Email jest wymagany.
+                                </div>
+
+                                <div *ngIf="editRestaurantForm.controls['email'].errors.minlength">
+                                    Minimalna długość maila to 5 znaków.
+                                </div>
+
+                                <div *ngIf="editRestaurantForm.controls['email'].errors.email">
+                                    Nie poprawna budowa maila.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" [ngClass]="editRestaurantForm.controls['city'].dirty ? 'was-validated' : null">
+                            <label>Miasto<span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="city" required maxlength="30" minlength="3" />
+
+                            <div
+                                *ngIf="
+                                    editRestaurantForm.controls['city'].invalid &&
+                                    (editRestaurantForm.controls['city'].dirty || editRestaurantForm.controls['city'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="editRestaurantForm.controls['city'].errors.required">
+                                    Miasto jest wymagane.
+                                </div>
+
+                                <div *ngIf="editRestaurantForm.controls['city'].errors.minlength">
+                                    Nazwa miasta musi być dłuższa niż 3 znaki.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="editRestaurantForm.controls['street'].dirty ? 'was-validated' : null">
+                            <label>Ulica<span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="street" required maxlength="30" minlength="3" />
+
+                            <div
+                                *ngIf="
+                                    editRestaurantForm.controls['street'].invalid &&
+                                    (editRestaurantForm.controls['street'].dirty || editRestaurantForm.controls['street'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="editRestaurantForm.controls['street'].errors.required">
+                                    Ulica jest wymagana.
+                                </div>
+
+                                <div *ngIf="editRestaurantForm.controls['street'].errors.minlength">
+                                    Nazwa ulicy musi być dłuższa niż 3 znaki.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" [ngClass]="editRestaurantForm.controls['area'].dirty ? 'was-validated' : null">
+                            <label>Województwo<span class="required">*</span></label>
+                            <select class="form-control" formControlName="area">
+                                <option disabled>Wybierz...</option>
+                                <option *ngFor="let area of areasPoland" [value]="area">{{ area }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div
+                            class="form-group col-md-4"
+                            [ngClass]="editRestaurantForm.controls['numberOfBuilding'].dirty ? 'was-validated' : null"
+                        >
+                            <label>Numer domu<span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="numberOfBuilding" required maxlength="30" />
+
+                            <div
+                                *ngIf="
+                                    editRestaurantForm.controls['numberOfBuilding'].invalid &&
+                                    (editRestaurantForm.controls['numberOfBuilding'].dirty ||
+                                        editRestaurantForm.controls['numberOfBuilding'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="editRestaurantForm.controls['numberOfBuilding'].errors.required">
+                                    Numer domu jest wymagany.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4" [ngClass]="editRestaurantForm.controls['postalCode'].dirty ? 'was-validated' : null">
+                            <label>Kod pocztowy<span class="required">*</span></label>
+                            <input
+                                mask="00-000"
+                                type="text"
+                                class="form-control"
+                                formControlName="postalCode"
+                                required
+                                maxlength="30"
+                                minlength="5"
+                                placeholder="12-345"
+                            />
+
+                            <div
+                                *ngIf="
+                                    editRestaurantForm.controls['postalCode'].invalid &&
+                                    (editRestaurantForm.controls['postalCode'].dirty || editRestaurantForm.controls['postalCode'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="editRestaurantForm.controls['postalCode'].errors.required">
+                                    Kod pocztowy jest wymagany.
+                                </div>
+
+                                <div *ngIf="editRestaurantForm.controls['postalCode'].errors.minlength">
+                                    Kod pocztowy musi mieć minimum 5 znaków.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4" [ngClass]="editRestaurantForm.controls['phoneNumber'].dirty ? 'was-validated' : null">
+                            <label>Telefon<span class="required">*</span></label>
+                            <input
+                                mask="000-000-000"
+                                type="text"
+                                class="form-control"
+                                formControlName="phoneNumber"
+                                required
+                                maxlength="30"
+                                minlength="9"
+                                placeholder="123-456-789"
+                            />
+
+                            <div
+                                *ngIf="
+                                    editRestaurantForm.controls['phoneNumber'].invalid &&
+                                    (editRestaurantForm.controls['phoneNumber'].dirty || editRestaurantForm.controls['phoneNumber'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="editRestaurantForm.controls['phoneNumber'].errors.required">
+                                    Telefon jest wymagany.
+                                </div>
+
+                                <div *ngIf="editRestaurantForm.controls['phoneNumber'].errors.minlength">
+                                    Numer telefonu musi być dłuższy niż 10 znaków.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Aktualizuj</button>
+                    </div>
+                </form>
+            </article>
+        </div>
+    </section>
+</ng-container>

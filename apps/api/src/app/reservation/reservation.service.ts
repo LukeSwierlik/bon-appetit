@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ReservationEntity } from './reservation.entity';
 import { CreateReservationDTO } from './dto/CreateReservationDTO';
-import { ReservationStatus } from '@tin-mini-projects/api-interfaces';
+import { ReservationStatus } from '@bon-appetit/interfaces';
 
 @Injectable()
 export class ReservationService {

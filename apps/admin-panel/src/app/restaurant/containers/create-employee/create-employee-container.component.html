@@ -1,0 +1,378 @@
+<div class="container">
+    <section *ngIf="formStatus$ | async as formStatus" class="section-content">
+        <tin-alert
+            *ngIf="formStatus.success"
+            [type]="AlertType.SUCCESS"
+            [message]="'Rejestracja pracownika powiodła się!'"
+        >
+        </tin-alert>
+
+
+        <tin-alert
+            *ngIf="formStatus.error"
+            [type]="AlertType.DANGER"
+            [message]="'Operacja nie powiodła sie, sprobuj wysłac ponownie formularz. Jezeli problem dalej wystepuje, zglos to do administracji!!'"
+        >
+        </tin-alert>
+
+        <div class="card mx-auto" style="max-width:720px;">
+            <article class="card-body">
+                <header class="mb-4"><h4 class="card-title">Rejestracja pracownika</h4></header>
+
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+                    <div class="form-row">
+                        <div class="col form-group" [ngClass]="registerForm.controls['firstName'].dirty ? 'was-validated' : null">
+                            <label>Imię<span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="firstName" required maxlength="30" minlength="2" />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['firstName'].invalid &&
+                                    (registerForm.controls['firstName'].dirty || registerForm.controls['firstName'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['firstName'].errors.required">
+                                    Imię jest wymagane.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['firstName'].errors.minlength">
+                                    Imię musi być dłuższe niż 2 litery.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col form-group" [ngClass]="registerForm.controls['lastName'].dirty ? 'was-validated' : null">
+                            <label>Nazwisko<span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="lastName" required maxlength="30" minlength="2" />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['lastName'].invalid &&
+                                    (registerForm.controls['lastName'].dirty || registerForm.controls['lastName'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['lastName'].errors.required">
+                                    Nazwisko jest wymagane.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['lastName'].errors.minlength">
+                                    Nazwisko musi być dłuższe niż 2 litery.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <div>
+                                <label>Płeć<span class="required">*</span></label>
+                            </div>
+
+                            <label class="custom-control custom-radio custom-control-inline">
+                                <input class="custom-control-input" checked type="radio" name="gender" [value]="Gender.MALE" formControlName="gender" />
+                                <span class="custom-control-label">Mężczyzna</span>
+                            </label>
+
+                            <label class="custom-control custom-radio custom-control-inline">
+                                <input class="custom-control-input" type="radio" name="gender" [value]="Gender.FEMALE" formControlName="gender" />
+                                <span class="custom-control-label">Kobieta</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group col-md-4" [ngClass]="registerForm.controls['type'].dirty ? 'was-roleId' : null">
+                            <label>Typ pracownika<span class="required">*</span></label>
+                            <select class="form-control" formControlName="type">
+                                <option disabled>Wybierz...</option>
+                                <option *ngFor="let type of employeeTypes" [value]="type.userType">{{ type.name }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4" [ngClass]="registerForm.controls['ratePerHours'].dirty ? 'was-validated' : null">
+                            <label>Wynagrodzenie na godzinę<span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="ratePerHours"
+                                   required maxlength="30" minlength="2" />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['ratePerHours'].invalid &&
+                                    (registerForm.controls['ratePerHours'].dirty || registerForm.controls['ratePerHours'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['ratePerHours'].errors.required">
+                                    Wynagrodzenie jest wymagany.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['ratePerHours'].errors.minlength">
+                                    Wynagrodzenie musi być dłuższy niż 2 znaki.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="registerForm.controls['email'].dirty ? 'was-validated' : null">
+                            <label>Email<span class="required">*</span></label>
+                            <input type="email" class="form-control" formControlName="email" required maxlength="30" minlength="4" />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['email'].invalid &&
+                                    (registerForm.controls['email'].dirty || registerForm.controls['email'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['email'].errors.required">
+                                    Email jest wymagany.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['email'].errors.minlength">
+                                    Email musi być dłuższy niż 4 znaki.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['email'].errors.email">
+                                    Nie poprawna konstrukcja emaila.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" [ngClass]="registerForm.controls['city'].dirty ? 'was-validated' : null">
+                            <label>Miasto<span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="city" required maxlength="30" minlength="3" />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['city'].invalid &&
+                                    (registerForm.controls['city'].dirty || registerForm.controls['city'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['city'].errors.required">
+                                    Miasto jest wymagane.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['city'].errors.minlength">
+                                    Nazwa miasta musi być dłuższa niż 3 znaki.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="registerForm.controls['street'].dirty ? 'was-validated' : null">
+                            <label>Ulica<span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="street" required maxlength="30" minlength="3" />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['street'].invalid &&
+                                    (registerForm.controls['street'].dirty || registerForm.controls['street'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['street'].errors.required">
+                                    Ulica jest wymagana.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['street'].errors.minlength">
+                                    Nazwa ulicy musi być dłuższa niż 3 znaki.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" [ngClass]="registerForm.controls['area'].dirty ? 'was-validated' : null">
+                            <label>Województwo<span class="required">*</span></label>
+                            <select class="form-control" formControlName="area">
+                                <option disabled>Wybierz...</option>
+                                <option *ngFor="let area of areasPoland" [value]="area">{{ area }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4" [ngClass]="registerForm.controls['numberOfBuilding'].dirty ? 'was-validated' : null">
+                            <label>Numer domu<span class="required">*</span></label>
+                            <input type="text" class="form-control" formControlName="numberOfBuilding" required maxlength="30" />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['numberOfBuilding'].invalid &&
+                                    (registerForm.controls['numberOfBuilding'].dirty || registerForm.controls['numberOfBuilding'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['numberOfBuilding'].errors.required">
+                                    Numer domu jest wymagany.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4" [ngClass]="registerForm.controls['numberOfFlat'].dirty ? 'was-validated' : null">
+                            <label>Numer mieszkania</label>
+                            <input type="text" class="form-control" formControlName="numberOfFlat" maxlength="30" />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['numberOfFlat'].invalid &&
+                                    (registerForm.controls['numberOfFlat'].dirty || registerForm.controls['numberOfFlat'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['numberOfFlat'].errors.pattern">
+                                    Tylko liczby.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4" [ngClass]="registerForm.controls['floor'].dirty ? 'was-validated' : null">
+                            <label>Piętro</label>
+                            <input type="text" class="form-control" formControlName="floor" maxlength="30" />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['numberOfFlat'].invalid &&
+                                    (registerForm.controls['numberOfFlat'].dirty || registerForm.controls['numberOfFlat'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['numberOfFlat'].errors.pattern">
+                                    Tylko liczby.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="registerForm.controls['postalCode'].dirty ? 'was-validated' : null">
+                            <label>Kod pocztowy<span class="required">*</span></label>
+                            <input
+                                mask="00-000"
+                                type="text"
+                                class="form-control"
+                                formControlName="postalCode"
+                                required
+                                maxlength="30"
+                                minlength="5"
+                                placeholder="12-345"
+                            />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['postalCode'].invalid &&
+                                    (registerForm.controls['postalCode'].dirty || registerForm.controls['postalCode'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['postalCode'].errors.required">
+                                    Kod pocztowy jest wymagany.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['postalCode'].errors.minlength">
+                                    Kod pocztowy musi mieć minimum 5 znaków.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6" [ngClass]="registerForm.controls['phoneNumber'].dirty ? 'was-validated' : null">
+                            <label>Telefon<span class="required">*</span></label>
+                            <input
+                                mask="000-000-000"
+                                type="text"
+                                class="form-control"
+                                formControlName="phoneNumber"
+                                required
+                                maxlength="30"
+                                minlength="9"
+                                placeholder="123-456-789"
+                            />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['phoneNumber'].invalid &&
+                                    (registerForm.controls['phoneNumber'].dirty || registerForm.controls['phoneNumber'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['phoneNumber'].errors.required">
+                                    Telefon jest wymagany.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['phoneNumber'].errors.minlength">
+                                    Numer telefonu musi być dłuższy niż 10 znaków.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6" [ngClass]="registerForm.controls['password'].dirty ? 'was-validated' : null">
+                            <label>Hasło<span class="required">*</span></label>
+                            <input class="form-control" type="password" formControlName="password" required maxlength="30" minlength="3" />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['password'].invalid &&
+                                    (registerForm.controls['password'].dirty || registerForm.controls['password'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['password'].errors.required">
+                                    Hasło jest wymagane.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['password'].errors.minlength">
+                                    Hasło musi być dłuższe nież 3 znaki.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6"
+                             [ngClass]="registerForm.controls['repeatPassword'].dirty ? 'was-validated' : null">
+                            <label>Powtórz hasło<span class="required">*</span></label>
+                            <input class="form-control" type="password" formControlName="repeatPassword" required maxlength="30" minlength="3" />
+
+                            <div
+                                *ngIf="
+                                    registerForm.controls['repeatPassword'].invalid &&
+                                    (registerForm.controls['repeatPassword'].dirty || registerForm.controls['repeatPassword'].touched)
+                                "
+                                class="invalid-feedback"
+                            >
+                                <div *ngIf="registerForm.controls['repeatPassword'].errors.required">
+                                    Musi powtórzyć hasło.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['repeatPassword'].errors.minlength">
+                                    Hasło musi być dłuższe nież 3 znaki.
+                                </div>
+
+                                <div *ngIf="registerForm.controls['repeatPassword'].errors.repeatProblem">
+                                    Hasła się nie zgadzają.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" formControlName="terms" />
+
+                            <div class="custom-control-label">
+                                Zgadzam się z
+                                <button (click)="showModal()" class="btn btn-link">warunkami i regulaminem</button>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Zarejestruj pracownika</button>
+                    </div>
+                </form>
+            </article>
+        </div>
+    </section>
+
+    <tin-modal [opened]="openedModal" [title]="'Warunki i regulaminem'" [text]="termsAndConditionals" (closed)="showModal()"></tin-modal>
+</div>

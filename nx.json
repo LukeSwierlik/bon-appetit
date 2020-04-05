@@ -29,15 +29,18 @@
     "api": {
       "tags": []
     },
-    "api-interfaces": {
-      "tags": []
-    },
     "client-app": {
       "tags": []
     },
     "client-app-e2e": {
       "tags": [],
       "implicitDependencies": ["client-app"]
+    },
+    "interfaces": {
+      "tags": []
+    },
+    "resources": {
+      "tags": []
     }
   }
 }

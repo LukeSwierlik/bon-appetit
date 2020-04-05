@@ -1,0 +1,101 @@
+<ng-container
+    *ngIf="(orders$ | async).length > 0; else empty"
+>
+    <main *ngFor="let order of orders$ | async" class="col-md-12 mb-4">
+        <article class="card">
+            <header class="card-header">
+                <strong class="d-inline-block mr-3">ID zamówienia: {{ order.id }}</strong>
+                <span>Data zamówienia: {{ getDate(order.created) }}</span>
+            </header>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="status-badge">
+                        <span [ngClass]="getClassOrderStatus(order.status)" class="badge px-4 py-2">{{ order.status }}</span>
+                    </div>
+
+                    <div class="col-md-8">
+                        <h4 class="text-primary"><strong>{{ order.__user__?.firstName }} {{ order.__user__?.lastName }}</strong></h4>
+
+                        <ul>
+                            <li>Telefon: <strong>{{ order.__user__?.phoneNumber }}</strong></li>
+                            <li>Email: <strong>{{ order.__user__?.email }}</strong></li>
+                        </ul>
+
+                        <div class="block">
+                            <h6 class="text-muted">Adres:</h6>
+
+                            <ul>
+                                <li>Miasto: <strong>{{ order.__user__?.city }}</strong></li>
+                                <li>Ulica: <strong>{{ order.__user__?.street }}</strong></li>
+                                <li>Number budynku: <strong>{{ order.__user__?.numberOfBuilding }}</strong></li>
+                                <li>Kod pocztowy: <strong>{{ order.__user__?.postalCode }}</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h6 class="text-muted">Płatność:</h6>
+                        <p>
+                            Ilość: <strong>{{ order.count }}</strong><br />
+                            <span class="b">Suma: {{ order.sumPriceDish }} zł</span>
+                        </p>
+
+                        <div
+                            *ngIf="(user$ | async) as user"
+                            class="row">
+                            <div
+                                *ngIf="user.type !== 'WaiterEntity'"
+                                class="col col-md-12 mb-2">
+                                <select class="form-control" (change)="changeStatus(order.id, $event)">
+                                    <option disabled>Wybierz...</option>
+                                    <option *ngFor="let orderStatus of generateOptions(user.type)" [value]="orderStatus">{{ orderStatus }}</option>
+                                </select>
+                            </div>
+
+                            <div class="col">
+                                <button
+                                    (click)="showUser(order.userId)"
+                                    type="button"
+                                    class="btn btn-primary"
+                                >O użytkowniku</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- row.// -->
+            </div>
+            <!-- card-body .// -->
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td width="105">
+                            <img src="{{ order.dish.imageUrl }}" class="img-md border" />
+                        </td>
+                        <td>
+                            <p class="title mb-0">{{ order.dish.name }}</p>
+                            <var class="price text-muted">{{ order.dish.price }} zł</var>
+                        </td>
+                        <td>
+                            <ul>
+                                <li *ngFor="let ingredient of order.dish.ingredients">{{ ingredient.name }}</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- table-responsive .end// -->
+        </article>
+        <!-- order-group.// -->
+    </main>
+</ng-container>
+
+<ng-template #empty>
+    <tin-alert
+        [type]="AlertType.PRIMARY"
+        [message]="'Nie ma aktualnie żadnych zamówień.'"
+    ></tin-alert>
+</ng-template>

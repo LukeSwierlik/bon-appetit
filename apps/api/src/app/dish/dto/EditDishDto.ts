@@ -1,5 +1,5 @@
 import { IsArray, IsInt, IsNotEmpty, IsNumber } from 'class-validator';
-import { Ingredient } from '@tin-mini-projects/api-interfaces';
+import { Ingredient } from '@bon-appetit/interfaces';
 
 export class EditDishDto {
     @IsInt()

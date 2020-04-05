@@ -1,0 +1,56 @@
+<div
+    *ngIf="(dishes$ | async).length > 0; else empty"
+    class="row">
+    <div
+        *ngFor="let dish of (dishes$ | async)"
+        class="col-md-6">
+
+        <article class="card card-product-list">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <aside class="col-sm-6">
+                        <a href="#" class="img-wrap">
+                            <img src="{{ dish.imageUrl }}"/></a>
+                    </aside>
+
+                    <!-- col.// -->
+                    <div class="col-sm-6">
+                        <a href="#" class="title mt-2 h5">{{ dish.name }}</a>
+                        <div class="d-flex mb-3">
+                            <div class="price-wrap mr-4">
+                                <span class="price h5">{{ dish.price }} zł</span>
+                            </div>
+                        </div>
+
+                        <ul *ngFor="let ingredient of dish.ingredients"
+                            class="list-bullet">
+                            <li>{{ ingredient.name }}</li>
+                        </ul>
+                        <!-- row.// -->
+                    </div>
+                    <!-- col.// -->
+                </div>
+                <!-- row.// -->
+
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <button
+                            (click)="editDish(dish.id)"
+                            class="col-3 mx-1 btn btn-primary">Edytuj</button>
+                        <button
+                            (click)="removeDish(dish.id)"
+                            class="col-3 mx-1 btn btn-danger">Usuń</button>
+                    </div>
+                </div>
+            </div>
+            <!-- card-body .// -->
+        </article>
+    </div>
+</div>
+
+<ng-template #empty>
+    <tin-alert
+        [type]="AlertType.PRIMARY"
+        [message]="'Nie ma obecnie żadnych dań.'"
+    ></tin-alert>
+</ng-template>

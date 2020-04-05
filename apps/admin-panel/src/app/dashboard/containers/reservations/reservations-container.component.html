@@ -1,0 +1,39 @@
+<main
+    *ngFor="let reservation of (reservations$ | async)"
+    class="col-md-12 mb-4">
+
+    <article class="card">
+        <header class="card-header">
+            <strong class="d-inline-block mr-3">ID rezerwacji: {{ reservation.id }}</strong>
+            <span>Data rezerwacji: {{ reservation.date }}, {{ reservation.hour }}</span>
+        </header>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <h6 class="text-muted">Restauracja</h6>
+                    <p>
+                        {{ reservation.restaurant.name }} <br />
+                        <b>Telefon:</b> {{ reservation.restaurant.phoneNumber }}, <b>Email:</b> {{ reservation.restaurant.email }} <br />
+                        <b>Lokalizajca:</b> {{ reservation.restaurant.city }}, {{ reservation.restaurant.area }},  {{ reservation.restaurant.street }} {{ reservation.restaurant.numberOfBuilding }}, {{ reservation.restaurant.country }} <br />
+                        {{ reservation.restaurant.postalCode}}
+                    </p>
+                </div>
+
+                <div class="col-md-4">
+                    <h6 class="text-muted">Stolik</h6>
+
+                    <span class="text-primary">
+                        {{ reservation.table.name }}
+                    </span>
+                    <p>
+                        <span class="b">{{ reservation.peopleCount}} / {{ reservation.table.maxPeopleCount }}</span>
+                    </p>
+                </div>
+            </div>
+            <!-- row.// -->
+        </div>
+        <!-- card-body .// -->
+    </article>
+    <!-- order-group.// -->
+</main>

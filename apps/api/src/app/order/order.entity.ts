@@ -11,7 +11,7 @@ import {
 import { RestaurantEntity } from '../restaurant/restaurant.entity';
 import { DishEntity } from '../dish/dish.entity';
 import { UserEntity } from '../user/user.entity';
-import { OrderStatus } from '@tin-mini-projects/api-interfaces';
+import { OrderStatus } from '@bon-appetit/interfaces';
 
 @Entity('order')
 export class OrderEntity {

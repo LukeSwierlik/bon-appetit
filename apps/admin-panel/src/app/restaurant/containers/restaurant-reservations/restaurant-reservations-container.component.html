@@ -1,0 +1,88 @@
+<ng-container *ngIf="(reservations$ | async).length > 0; else empty">
+    <main *ngFor="let reservation of reservations$ | async" class="col-md-12 mb-4">
+        <article class="card">
+            <header class="card-header">
+                <strong class="d-inline-block mr-3">ID rezerwacji: {{ reservation.id }}</strong>
+                <span>Data rezerwacji: {{ reservation.date }}, {{ reservation.hour }}</span>
+            </header>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="status-badge">
+                        <span [ngClass]="getClassReservationStatus(reservation.status)" class="badge px-4 py-2">{{ reservation.status }}</span>
+                    </div>
+
+                    <div class="col-md-8">
+                        <h4 class="text-primary">
+                            <strong>{{ reservation.__user__?.firstName }} {{ reservation.__user__?.lastName }}</strong>
+                        </h4>
+
+                        <ul>
+                            <li>
+                                Telefon: <strong>{{ reservation.__user__?.phoneNumber }}</strong>
+                            </li>
+                            <li>
+                                Email: <strong>{{ reservation.__user__?.email }}</strong>
+                            </li>
+                        </ul>
+
+
+                        <div class="block">
+                            <h6 class="text-muted">Adres:</h6>
+
+                            <ul>
+                                <li>
+                                    Miasto: <strong>{{ reservation.__user__?.city }}</strong>
+                                </li>
+                                <li>
+                                    Ulica: <strong>{{ reservation.__user__?.street }}</strong>
+                                </li>
+                                <li>
+                                    Number budynku: <strong>{{ reservation.__user__?.numberOfBuilding }}</strong>
+                                </li>
+                                <li>
+                                    Kod pocztowy: <strong>{{ reservation.__user__?.postalCode }}</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h6 class="text-muted">Stolik</h6>
+
+                        <span class="text-primary">
+                            {{ reservation.table?.name }}
+                        </span>
+                        <p>
+                            <span class="b">{{ reservation.peopleCount }} / {{ reservation.table.maxPeopleCount }}</span>
+                        </p>
+
+                        <div class="row">
+                            <div *ngIf="(user$ | async)?.type === 'WaiterEntity'" class="col col-md-12 mb-2">
+                                <select class="form-control" (change)="changeStatus(reservation.id, $event)">
+                                    <option disabled>Wybierz...</option>
+                                    <option *ngFor="let reservationStatus of reservationStatuses()" [value]="reservationStatus">{{ reservationStatus }}</option>
+                                </select>
+                            </div>
+
+                            <div class="col">
+                                <button
+                                    (click)="showUser(reservation.__user__?.id)"
+                                    type="button"
+                                    class="btn btn-secondary"
+                                >O użytkowniku</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- row.// -->
+            </div>
+            <!-- card-body .// -->
+        </article>
+        <!-- order-group.// -->
+    </main>
+</ng-container>
+
+<ng-template #empty>
+    <tin-alert [type]="AlertType.PRIMARY" [message]="'Nie ma aktualnie żadnych rezerwacji.'"></tin-alert>
+</ng-template>

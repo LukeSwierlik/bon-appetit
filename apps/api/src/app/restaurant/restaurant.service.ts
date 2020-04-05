@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Restaurant, Template } from '@tin-mini-projects/api-interfaces';
+import { Restaurant, Template } from '@bon-appetit/interfaces';
 import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RestaurantEntity } from './restaurant.entity';

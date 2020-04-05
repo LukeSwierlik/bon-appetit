@@ -1,0 +1,10 @@
+<ng-container
+    *ngIf="(company$ | async) as company"
+>
+    <tin-title
+        [title]="'Informacje o firmie:' + ' ' + company.name"
+    ></tin-title>
+
+    <tin-sidebar-company></tin-sidebar-company>
+</ng-container>
+

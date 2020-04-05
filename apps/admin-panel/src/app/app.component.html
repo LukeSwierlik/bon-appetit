@@ -1,8 +1,6 @@
-<div style="text-align:center">
-  <h1>Welcome to admin-panel!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png"
-  />
-</div>
-<div>Message: {{ hello$ | async | json }}</div>
+<tin-header></tin-header>
+<tin-menu
+    *ngIf="(roleUser$ | async)?.id <= 1"
+></tin-menu>
+<router-outlet></router-outlet>
+<tin-footer></tin-footer>

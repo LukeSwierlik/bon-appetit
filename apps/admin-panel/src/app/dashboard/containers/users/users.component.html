@@ -1,0 +1,84 @@
+<div class="container"
+>
+    <header class="section-heading">
+        <h3 class="section-title">Lista użytkowników</h3>
+    </header>
+
+    <div class="row mb-4">
+        <div class="col-sm-12">
+            <form class="search">
+                <div class="input-group w-100">
+                    <input type="text" class="form-control" placeholder="Search" [formControl]="usersSearchControl"/>
+
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- search-wrap .end// -->
+        </div>
+        <!-- col.// -->
+    </div>
+
+    <div
+        *ngIf="(users$ | async).length"
+        class="users row">
+        <article
+            *ngFor="let user of (users$ | async)"
+            class="card mb-4 col-md-4"
+        >
+            <div class="card-body">
+                <figure class="icontext">
+                    <div class="icon">
+                        <img class="rounded-circle img-sm border" src="https://image.flaticon.com/icons/svg/149/149995.svg" alt="avatar">
+                    </div>
+
+                    <div class="text">
+                        <strong> {{ user.firstName }} {{ user.lastName }}</strong> <br>
+
+                        <ul class="list-group">
+                            <li class="list-unstyled">Email: <strong>{{ user.email }}</strong></li>
+                            <li class="list-unstyled">Telefon: <strong>{{ user.phoneNumber }}</strong></li>
+                            <li class="list-unstyled">Rola:
+                                <strong [ngClass]="getColorRole(user.type)">
+                                    {{ user.type }}
+                                </strong>
+                            </li>
+                        </ul>
+                    </div>
+                </figure>
+
+                <hr/>
+
+                <div class="row mt-4 border-top-2">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <h5>
+                                <i class="fa fa-map-marker text-muted"></i> &nbsp;
+                                Adres:
+                            </h5>
+
+                            <ul>
+                                <li>Państwo: <strong>{{ user.country }}</strong></li>
+                                <li>Miasto: <strong>{{ user.city }}</strong></li>
+                                <li>Ulica: <strong>{{ user.street }}</strong></li>
+                                <li>Number mieszkania: <strong>{{ user.numberOfBuilding }}</strong></li>
+                                <li>Kod pocztowy: <strong>{{ user.postalCode }}</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="buttons d-flex justify-content-lg-center">
+                    <button class="btn btn-primary" (click)="details(user.email, user.id)" type="button">Szczegóły</button>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+
+

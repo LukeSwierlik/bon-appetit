@@ -1,0 +1,187 @@
+<ng-container *ngIf="selectedRestaurant$ | async as restaurant">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="card">
+                <div class="row no-gutters">
+                    <aside class="col-md-6">
+                        <article class="gallery-wrap">
+                            <div class="img-big-wrap">
+                                <div>
+                                    <a href="#">
+                                        <img src="{{ restaurant.heroUrl }}" />
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    </aside>
+                    <main class="col-md-6 border-left">
+                        <article class="content-body">
+                            <h2 class="title">{{ restaurant.name }}</h2>
+
+                            <p>
+                                Virgil Abloh’s Off-White is a streetwear-inspired collection that continues to break away from the conventions of
+                                mainstream fashion. Made in Italy, these black and brown Odsy-1000 low-top sneakers.
+                            </p>
+
+                            <dl class="row">
+                                <dt class="col-sm-3">Status</dt>
+                                <dd class="col-sm-9">
+                                    <span *ngIf="restaurant.opened; else closed" class="badge badge-success">Otwarte</span>
+
+                                    <ng-template #closed>
+                                        <span class="badge badge-danger">Zamknięte</span>
+                                    </ng-template>
+                                </dd>
+
+                                <dt class="col-sm-3">Ilość dań</dt>
+                                <dd class="col-sm-9">{{ (dishes$ | async).length || 0 }}</dd>
+                            </dl>
+
+                            <div class="row mt-4">
+                                <div class="col-mb-6">
+                                    <button
+                                        *ngIf="showDishes"
+                                        (click)="toggleReservationForm()"
+                                        class="btn btn-block btn-primary"
+                                        type="button"
+                                    >
+                                        Zrób rezerwacje
+                                    </button>
+                                </div>
+
+                                <div class="col-mb-6">
+                                    <button
+                                        *ngIf="showFormReservation"
+                                        (click)="toggleReservationForm()"
+                                        class="btn btn-block btn-secondary"
+                                        type="button"
+                                    >
+                                        Pokaż dania
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        <!-- product-info-aside .// -->
+                    </main>
+                    <!-- col.// -->
+                </div>
+                <!-- row.// -->
+            </div>
+            <!-- card.// -->
+        </div>
+    </div>
+
+    <ng-container
+        *ngIf="!showFormReservation; else reservationForm"
+    >
+        <tin-title [title]="'Dania'"> </tin-title>
+
+        <div class="container">
+            <div class="row">
+                <div *ngFor="let dish of dishes$ | async" class="col-md-6">
+                    <tin-card-meal
+                        [authenticated]="authenticated$ | async"
+                        [openedRestaurant]="restaurant.opened"
+                        [dish]="dish"
+                        (addToOrder)="addToOrders($event)"
+                    ></tin-card-meal>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+
+    <ng-template #reservationForm>
+        <tin-title [title]="'Rezerwacja'"> </tin-title>
+
+        <div
+            *ngIf="formStatus$ | async as formStatus"
+            class="container">
+            <div
+                *ngIf="!formStatus.sendForm; else alert"
+                class="row">
+                <div class="col-md-6 card mx-auto">
+                    <article class="card-body">
+                        <header class="mb-4"><h4 class="card-title">Formularz rezerwacji</h4></header>
+
+                        <form [formGroup]="createReservationForm" (ngSubmit)="onSubmit()" novalidate>
+                            <div class="form-row">
+                                <div class="col form-group" [ngClass]="createReservationForm.controls['tableId'].dirty ? 'was-validated' : null">
+                                    <label>Wybierz stolik<span class="required">*</span></label>
+                                    <select (change)="onChange($event)" class="form-control" formControlName="tableId">
+                                        <option disabled>Wybierz...</option>
+                                        <option *ngFor="let table of (tables$ | async)" [value]="table.id"> {{ table.name }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col form-group" [ngClass]="createReservationForm.controls['peopleCount'].dirty ? 'was-validated' : null">
+                                    <label>Ilu osoby<span class="required">*</span></label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" formControlName="peopleCount" required min="2" max="30" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="inputGroupPrepend3">max. {{ maxPeopleCount }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        *ngIf="
+                                        createReservationForm.controls['peopleCount'].invalid &&
+                                        (createReservationForm.controls['peopleCount'].dirty || createReservationForm.controls['peopleCount'].touched)
+                                    "
+                                        class="invalid-feedback"
+                                    >
+                                        <div *ngIf="createReservationForm.controls['peopleCount'].errors.required">
+                                            To pole jest wymagane.
+                                        </div>
+
+                                        <div *ngIf="createReservationForm.controls['peopleCount'].errors.min">
+                                            Minimalna wartość wynosi 1.
+                                        </div>
+
+                                        <div *ngIf="createReservationForm.controls['peopleCount'].errors.max">
+                                            Maksymalna wartość wynosi 1.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label>Wybierz date<span class="required">*</span></label>
+                                    <input type="date" class="form-control" formControlName="date" required />
+                                </div>
+
+                                <div class="col form-group" [ngClass]="createReservationForm.controls['hour'].dirty ? 'was-validated' : null">
+                                    <label>Wybierz godzine<span class="required">*</span></label>
+                                    <input type="time" class="form-control" formControlName="hour" required />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Zrób rezerwacje</button>
+                            </div>
+                        </form>
+                    </article>
+                </div>
+            </div>
+
+            <ng-template #alert>
+                <div class="mx-auto" style="max-width:720px;">
+                    <tin-alert
+                        *ngIf="formStatus.success && (user$ | async) as user"
+                        [type]="AlertType.SUCCESS"
+                        [message]="getMessageSuccessReservation(restaurant, user)"
+                    >
+                    </tin-alert>
+
+                    <tin-alert
+                        *ngIf="formStatus.error"
+                        [type]="AlertType.DANGER"
+                        [message]="'Wystąpił błąd podczas składania rezerwacji w systemie. Proszę wypełnij formularz ponownie i wyślij jeszcze raz!'"
+                    >
+                    </tin-alert>
+                </div>
+            </ng-template>
+        </div>
+    </ng-template>
+</ng-container>

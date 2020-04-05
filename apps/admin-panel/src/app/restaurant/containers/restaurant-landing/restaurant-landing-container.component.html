@@ -1,0 +1,13 @@
+<ng-container
+    *ngIf="(restaurant$ | async) as restaurant"
+>
+    <tin-title
+        [title]="'Restaurant: ' + ' ' + restaurant.name"
+    ></tin-title>
+
+    <tin-sidebar-restaurant></tin-sidebar-restaurant>
+</ng-container>
+
+
+
+

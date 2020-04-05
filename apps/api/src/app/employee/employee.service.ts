@@ -6,7 +6,7 @@ import { CreateEmployeeDto } from './dto/CreateEmployeeDto';
 import { DelivererEntity } from './deliverer.entity';
 import { WaiterEntity } from './waiter.entity';
 import { CookEntity } from './cook.entity';
-import { UserType } from '@tin-mini-projects/api-interfaces';
+import { UserType } from '@bon-appetit/interfaces';
 import { OwnerEntity } from './owner.entity';
 
 @Injectable()

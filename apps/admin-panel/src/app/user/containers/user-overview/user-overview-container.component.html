@@ -1,0 +1,59 @@
+<article
+    *ngIf="(user$ | async) as user"
+    class="card mb-3"
+>
+    <div class="card-body">
+        <figure class="icontext">
+            <div class="icon">
+                <img class="rounded-circle img-sm border" src="https://image.flaticon.com/icons/svg/149/149995.svg" alt="avatar">
+            </div>
+
+            <div class="text">
+                <strong> {{ user.firstName }} {{ user.lastName }}</strong> <br>
+
+                <ul class="list-group">
+                    <li class="list-unstyled">Email: <strong>{{ user.email }}</strong></li>
+                    <li class="list-unstyled">Telefon: <strong>{{ user.phoneNumber }}</strong></li>
+                </ul>
+            </div>
+        </figure>
+
+        <hr/>
+
+        <div class="row mt-4 border-top-2">
+            <div class="col-md-6">
+                <div class="block">
+                    <h5>
+                        <i class="fa fa-map-marker text-muted"></i> &nbsp;
+                        Adres:
+                    </h5>
+
+                    <ul>
+                        <li>Państwo: <strong>{{ user.country }}</strong></li>
+                        <li>Miasto: <strong>{{ user.city }}</strong></li>
+                        <li>Ulica: <strong>{{ user.street }}</strong></li>
+                        <li>Number mieszkania: <strong>{{ user.numberOfBuilding }}</strong></li>
+                        <li>Kod pocztowy: <strong>{{ user.postalCode }}</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div
+                *ngIf="user.type === 'UserEntity'"
+                class="col-md-6">
+                <div class="block">
+                    <h5>
+                        <i class="fa fa-credit-card text-muted"></i> &nbsp;
+                        Informacje o karcie:
+                    </h5>
+
+                    <ul>
+                        <li>Właściciel karty: <strong>{{ user.payment.usernameCard }}</strong></li>
+                        <li>Numer karty: <strong>{{ user.payment.numberCard }}</strong></li>
+                        <li>Ważność karty: <strong>{{ user.payment.expirationMonth }} / {{ user.payment.expirationYear }}</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>

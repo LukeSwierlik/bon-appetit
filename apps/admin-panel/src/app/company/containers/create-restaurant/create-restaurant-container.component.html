@@ -1,0 +1,347 @@
+<section *ngIf="formStatus$ | async as formStatus" class="section-content">
+    <tin-alert *ngIf="formStatus.success" [type]="AlertType.SUCCESS" [message]="'Rejestracja powiodła się! Możesz się zalogować!'"> </tin-alert>
+
+    <tin-alert *ngIf="formStatus.error" [type]="AlertType.DANGER" [message]="'Operacja nie powiodła sie, sprobuj wysłac ponownie formularz. Jezeli problem dalej wystepuje, zglos to do administracji!!'"> </tin-alert>
+
+    <div class="card mx-auto">
+        <article class="card-body">
+            <header class="mb-4"><h4 class="card-title">Formularz tworzenia restauracji</h4></header>
+
+            <form [formGroup]="registerRestaurantForm" (ngSubmit)="onSubmit()" novalidate>
+                <div class="form-row">
+                    <div class="col form-group" [ngClass]="registerRestaurantForm.controls['name'].dirty ? 'was-validated' : null">
+                        <label>Nazwa restauracji<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="name" required maxlength="30" minlength="3" />
+
+                        <div
+                            *ngIf="
+                                registerRestaurantForm.controls['name'].invalid &&
+                                (registerRestaurantForm.controls['name'].dirty || registerRestaurantForm.controls['name'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['name'].errors.required">
+                                Nazwa restauracji jest wymagana.
+                            </div>
+
+                            <div *ngIf="registerRestaurantForm.controls['name'].errors.minlength">
+                                Nazwa restauracji musi zawierać więcej niż 3 znaki.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col form-group" [ngClass]="registerRestaurantForm.controls['logoUrl'].dirty ? 'was-validated' : null">
+                        <label>Link do Loga firmy<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="logoUrl" required
+                               placeholder="https://example.com/logo.jpg"
+                        />
+
+                        <div
+                            *ngIf="
+                                registerRestaurantForm.controls['logoUrl'].invalid &&
+                                (registerRestaurantForm.controls['logoUrl'].dirty || registerRestaurantForm.controls['logoUrl'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['logoUrl'].errors.required">
+                                Link do loga firmy jest wymagane.
+                            </div>
+
+                            <div *ngIf="registerRestaurantForm.controls['logoUrl'].errors.pattern">
+                                Link jest nie poprawny. Pamiętaj, że link musi mieć końcówkę .jpg lub .png.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6 form-group" [ngClass]="registerRestaurantForm.controls['heroUrl'].dirty ? 'was-validated' : null">
+                        <label>Link do Hero firmy<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="heroUrl" required
+                               placeholder="https://example.com/logo.jpg"
+                        />
+
+                        <div
+                            *ngIf="
+                                registerRestaurantForm.controls['heroUrl'].invalid &&
+                                (registerRestaurantForm.controls['heroUrl'].dirty || registerRestaurantForm.controls['heroUrl'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['heroUrl'].errors.required">
+                                Link do hero firmy jest wymagane.
+                            </div>
+
+                            <div *ngIf="registerRestaurantForm.controls['heroUrl'].errors.pattern">
+                                Link jest nie poprawny. Pamiętaj, że link musi mieć końcówkę .jpg lub .png.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 form-group" [ngClass]="registerRestaurantForm.controls['thumbnailUrl'].dirty ? 'was-validated' : null">
+                        <label>Link do miniaturki<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="thumbnailUrl" required
+                               placeholder="https://example.com/logo.jpg"
+                        />
+
+                        <div
+                            *ngIf="
+                                registerRestaurantForm.controls['thumbnailUrl'].invalid &&
+                                (registerRestaurantForm.controls['thumbnailUrl'].dirty || registerRestaurantForm.controls['thumbnailUrl'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['thumbnailUrl'].errors.required">
+                                Link do miniaturki jest wymagane.
+                            </div>
+
+                            <div *ngIf="registerRestaurantForm.controls['thumbnailUrl'].errors.pattern">
+                                Link jest nie poprawny. Pamiętaj, że link musi mieć końcówkę .jpg lub .png.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-4 form-group" [ngClass]="registerRestaurantForm.controls['websiteUrl'].dirty ? 'was-validated' : null">
+                        <label>Link do websiteUrl<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="websiteUrl" required
+                               placeholder="https://example.com"
+                        />
+
+                        <div
+                            *ngIf="
+                                registerRestaurantForm.controls['websiteUrl'].invalid &&
+                                (registerRestaurantForm.controls['websiteUrl'].dirty || registerRestaurantForm.controls['websiteUrl'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['websiteUrl'].errors.required">
+                                Link do miniaturki jest wymagane.
+                            </div>
+
+                            <div *ngIf="registerRestaurantForm.controls['websiteUrl'].errors.pattern">
+                                Link jest nie poprawny. Pamiętaj, że link musi mieć końcówkę .jpg lub .png.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group" [ngClass]="registerRestaurantForm.controls['template'].dirty ? 'was-validated' : null">
+                        <label>Wybierz szablon<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="template" required
+                               placeholder="Defautl"
+                        />
+
+                        <div
+                            *ngIf="
+                                registerRestaurantForm.controls['template'].invalid &&
+                                (registerRestaurantForm.controls['template'].dirty ||
+                                registerRestaurantForm.controls['template'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['template'].errors.required">
+                                Szablon jest wymagany jest wymagane.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 form-group" [ngClass]="registerRestaurantForm.controls['timeReservation'].dirty ? 'was-validated' : null">
+                        <label>Czas rezerwacji<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="timeReservation" required
+                               placeholder="Defautl"
+                        />
+
+                        <div
+                            *ngIf="
+                                registerRestaurantForm.controls['timeReservation'].invalid &&
+                                (registerRestaurantForm.controls['timeReservation'].dirty ||
+                                registerRestaurantForm.controls['timeReservation'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['timeReservation'].errors.required">
+                                Czas rezerwacji jest wymagany jest wymagany jest wymagane.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6" [ngClass]="registerRestaurantForm.controls['email'].dirty ? 'was-validated' : null">
+                        <label>Email<span class="required">*</span></label>
+                        <input type="email" class="form-control" formControlName="email" required maxlength="30" minlength="5" />
+
+                        <div
+                            *ngIf="
+                            registerRestaurantForm.controls['email'].invalid &&
+                            (registerRestaurantForm.controls['email'].dirty || registerRestaurantForm.controls['email'].touched)
+                        "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['email'].errors.required">
+                                Email jest wymagany.
+                            </div>
+
+                            <div *ngIf="registerRestaurantForm.controls['email'].errors.minlength">
+                                Minimalna długość maila to 5 znaków.
+                            </div>
+
+                            <div *ngIf="registerRestaurantForm.controls['email'].errors.email">
+                                Nie poprawna budowa maila.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6" [ngClass]="registerRestaurantForm.controls['city'].dirty ? 'was-validated' : null">
+                        <label>Miasto<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="city" required maxlength="30" minlength="3" />
+
+                        <div
+                            *ngIf="
+                                registerRestaurantForm.controls['city'].invalid &&
+                                (registerRestaurantForm.controls['city'].dirty || registerRestaurantForm.controls['city'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['city'].errors.required">
+                                Miasto jest wymagane.
+                            </div>
+
+                            <div *ngIf="registerRestaurantForm.controls['city'].errors.minlength">
+                                Nazwa miasta musi być dłuższa niż 3 znaki.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6" [ngClass]="registerRestaurantForm.controls['street'].dirty ? 'was-validated' : null">
+                        <label>Ulica<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="street" required maxlength="30" minlength="3" />
+
+                        <div
+                            *ngIf="
+                                registerRestaurantForm.controls['street'].invalid &&
+                                (registerRestaurantForm.controls['street'].dirty || registerRestaurantForm.controls['street'].touched)
+                            "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['street'].errors.required">
+                                Ulica jest wymagana.
+                            </div>
+
+                            <div *ngIf="registerRestaurantForm.controls['street'].errors.minlength">
+                                Nazwa ulicy musi być dłuższa niż 3 znaki.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6" [ngClass]="registerRestaurantForm.controls['area'].dirty ? 'was-validated' : null">
+                        <label>Województwo<span class="required">*</span></label>
+                        <select class="form-control" formControlName="area">
+                            <option disabled>Wybierz...</option>
+                            <option *ngFor="let area of areasPoland" [value]="area">{{ area }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4" [ngClass]="registerRestaurantForm.controls['numberOfBuilding'].dirty ? 'was-validated' : null">
+                        <label>Numer domu<span class="required">*</span></label>
+                        <input type="text" class="form-control" formControlName="numberOfBuilding" required maxlength="30" />
+
+                        <div
+                            *ngIf="
+                                    registerRestaurantForm.controls['numberOfBuilding'].invalid &&
+                                    (registerRestaurantForm.controls['numberOfBuilding'].dirty || registerRestaurantForm.controls['numberOfBuilding'].touched)
+                                "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['numberOfBuilding'].errors.required">
+                                Numer domu jest wymagany.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4" [ngClass]="registerRestaurantForm.controls['postalCode'].dirty ? 'was-validated' : null">
+                        <label>Kod pocztowy<span class="required">*</span></label>
+                        <input
+                            mask="00-000"
+                            type="text"
+                            class="form-control"
+                            formControlName="postalCode"
+                            required
+                            maxlength="30"
+                            minlength="5"
+                            placeholder="12-345"
+                        />
+
+                        <div
+                            *ngIf="
+                                    registerRestaurantForm.controls['postalCode'].invalid &&
+                                    (registerRestaurantForm.controls['postalCode'].dirty || registerRestaurantForm.controls['postalCode'].touched)
+                                "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['postalCode'].errors.required">
+                                Kod pocztowy jest wymagany.
+                            </div>
+
+                            <div *ngIf="registerRestaurantForm.controls['postalCode'].errors.minlength">
+                                Kod pocztowy musi mieć minimum 5 znaków.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4" [ngClass]="registerRestaurantForm.controls['phoneNumber'].dirty ? 'was-validated' : null">
+                        <label>Telefon<span class="required">*</span></label>
+                        <input
+                            mask="000-000-000"
+                            type="text"
+                            class="form-control"
+                            formControlName="phoneNumber"
+                            required
+                            maxlength="30"
+                            minlength="9"
+                            placeholder="123-456-789"
+                        />
+
+                        <div
+                            *ngIf="
+                                    registerRestaurantForm.controls['phoneNumber'].invalid &&
+                                    (registerRestaurantForm.controls['phoneNumber'].dirty || registerRestaurantForm.controls['phoneNumber'].touched)
+                                "
+                            class="invalid-feedback"
+                        >
+                            <div *ngIf="registerRestaurantForm.controls['phoneNumber'].errors.required">
+                                Telefon jest wymagany.
+                            </div>
+
+                            <div *ngIf="registerRestaurantForm.controls['phoneNumber'].errors.minlength">
+                                Numer telefonu musi być dłuższy niż 10 znaków.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" formControlName="terms" />
+
+                        <div class="custom-control-label">
+                            Zgadzam się z
+                            <button (click)="showModal()" class="btn btn-link">warunkami i regulaminem</button>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Zarejestruj</button>
+                </div>
+            </form>
+        </article>
+    </div>
+</section>
+
+<tin-modal [opened]="openedModal" [title]="'Warunki i regulaminem'" [text]="termsAndConditionals" (closed)="showModal()"></tin-modal>
