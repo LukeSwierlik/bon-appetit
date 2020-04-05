@@ -52,23 +52,23 @@ export class RegisterContainerComponent {
         }, { validators:  this.passwordConfirming });
     }
 
-    passwordConfirming(group: FormGroup) {
+    public passwordConfirming(group: FormGroup): void {
         const repeatPasswordInput = group.controls["repeatPassword"];
 
         if (group.value.password !== group.value.repeatPassword) {
-            return repeatPasswordInput.setErrors({
+            repeatPasswordInput.setErrors({
                 repeatProblem: true
             });
         } else {
-            return repeatPasswordInput.setErrors(null);
+            repeatPasswordInput.setErrors(null);
         }
     }
 
-    showModal() {
+    public showModal(): void {
         this.openedModal = !this.openedModal;
     }
 
-    onSubmit(): void {
+    public onSubmit(): void {
         if (this.registerForm.valid) {
             const { terms, repeatPassword, ...registerUser} = this.registerForm.value;
 
@@ -78,7 +78,7 @@ export class RegisterContainerComponent {
         }
     }
 
-    generationYears(): number[] {
+    public generationYears(): number[] {
         const date = new Date();
         const years = [];
 
@@ -89,7 +89,7 @@ export class RegisterContainerComponent {
         return years;
     }
 
-    generationMonths(): Month[] {
+    public generationMonths(): Month[] {
         return months.map((month, i) => ({
             id: i+1,
             name: month

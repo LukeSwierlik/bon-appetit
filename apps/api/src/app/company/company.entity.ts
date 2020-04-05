@@ -37,30 +37,11 @@ export class CompanyEntity extends AddressEntity {
 
     user: UserEntity;
 
-    addRestaurant(restaurant: RestaurantEntity): void {
+    public addRestaurant(restaurant: RestaurantEntity): void {
         if (!this.restaurants.includes(restaurant)) {
             this.restaurants.push(restaurant);
 
             restaurant.setCompany(this);
         }
-    }
-
-    editRestaurant(restaurant: RestaurantEntity): void {
-        const findRestaurant = this.restaurants.find(res => res.id === restaurant.id);
-
-        if (findRestaurant !== null) {
-            this.restaurants = [
-                ...this.restaurants.filter(res => res.id !== restaurant.id),
-                restaurant
-            ];
-        }
-    }
-
-    removeRestaurant(id: number): void {
-        this.restaurants = this.restaurants.filter(res => res.id !== id);
-    }
-
-    getCompany(): CompanyEntity {
-        return this;
     }
 }

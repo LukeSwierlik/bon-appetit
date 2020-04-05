@@ -10,34 +10,45 @@
             <h4 class="card-title mb-4">Zaloguj się</h4>
 
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <a href="#" class="btn btn-facebook btn-block mb-2"> <i class="fab fa-facebook-f"></i> &nbsp;  Sign in with Facebook</a>
-                <a href="#" class="btn btn-google btn-block mb-4"> <i class="fab fa-google"></i> &nbsp;  Sign in with Google</a>
+                <a href="#" class="btn btn-facebook btn-block mb-2">
+                    <i class="fab fa-facebook-f"></i>
+                    Sign in with Facebook
+                </a>
+
+                <a href="#" class="btn btn-google btn-block mb-4">
+                    <i class="fab fa-google"></i>
+                    Sign in with Google
+                </a>
 
                 <div class="form-group">
                     <input
                         formControlName="email"
-                        name="email" class="form-control" placeholder="Email" type="email">
-                </div> <!-- commons-group// -->
+                        name="email"
+                        class="form-control"
+                        placeholder="Email"
+                        type="email"
+                    >
+                </div>
 
                 <div class="form-group">
                     <input
                         formControlName="password"
-                        name="password" class="form-control" placeholder="Password" type="password">
-                </div> <!-- commons-group// -->
+                        name="password"
+                        class="form-control"
+                        placeholder="Password"
+                        type="password"
+                    >
+                </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Zaloguj </button>
-                </div> <!-- commons-group// -->
+                    <button type="submit" class="btn btn-primary btn-block">Zaloguj</button>
+                </div>
             </form>
-        </div> <!-- card-body.// -->
-    </div> <!-- card .// -->
+        </div>
+    </div>
 
     <div class="mx-auto" style="max-width: 580px;">
-        <p class="text-center mt-4">Nie masz konta? <a [routerLink]="['/register']">Zarejestruj się</a></p>
-        <br>
-
-        <hr/>
-        <p class="text-center mt-4">Jeżeli jesteś pracownikiem to kliknij <a [routerLink]="['/createEmployee-login']">tutaj</a> aby się zalogować.</p>
+        <p class="text-center mt-4">Nie masz konta? <a [routerLink]="['/register/owner']">Zarejestruj się</a></p>
         <br>
     </div>
 </section>

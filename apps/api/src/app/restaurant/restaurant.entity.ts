@@ -90,41 +90,4 @@ export class RestaurantEntity extends AddressEntity {
             company.addRestaurant(this);
         }
     }
-
-    public getReservations(): ReservationEntity[] {
-        return this.reservations;
-    }
-
-    public getTables(): TableEntity[] {
-        return this.tables;
-    }
-
-    public getOrders(): OrderEntity[] {
-        return this.orders;
-    }
-
-    public getCompany(): CompanyEntity {
-        return this.company;
-    }
-
-    public editRestaurant(restaurant: EditRestaurantDto): RestaurantEntity {
-        const { name, email, area, city, heroUrl, id, logoUrl, numberOfBuilding, phoneNumber, postalCode, street, thumbnailUrl, websiteUrl } = restaurant;
-
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.area = area;
-        this.city = city;
-        this.heroUrl = heroUrl;
-        this.logoUrl = logoUrl;
-        this.numberOfBuilding = numberOfBuilding;
-        this.phoneNumber = phoneNumber;
-        this.postalCode = postalCode;
-        this.street = street;
-        this.thumbnailUrl = thumbnailUrl;
-        this.websiteUrl = websiteUrl;
-        this.updated = new Date();
-
-        return this;
-    }
 }

@@ -7,6 +7,4 @@ export const LoginUser = createAction('[Auth] LoginAction User', props<{ form: F
 export const SuccessLogin = createAction('[Auth] Success LoginAction', props<{ user: User }>());
 export const ErrorLogin = createAction('[Auth] ERROR LoginAction');
 
-export const SuccessEmployeeLogin = createAction('[Auth] Success Employee LoginAction', props<{ user: User }>());
-
 export const Logout = createAction('[Auth] LogoutAction');

@@ -1,7 +1,5 @@
 <header class="section-header">
-    <nav
-        [ngClass]="(userRole$ | async)?.id > 1 ? 'bg-success' : 'bg-primary'"
-        class="navbar navbar-dark navbar-expand p-0">
+    <nav class="navbar navbar-dark navbar-expand p-0 bg-success">
         <div class="container">
             <ul class="navbar-nav d-none d-md-flex mr-auto">
                 <li class="nav-item"><a class="nav-link" [routerLink]="['/users']">Lista użytkowników</a></li>
@@ -64,36 +62,32 @@
                 <div class="col-lg-4 col-sm-6 col-12">
                     <div class="widgets-wrap float-md-right">
                         <div class="widget-header mr-3">
-                            <a
-                                *ngIf="(userRole$ | async)?.id > 1 else orders"
-                                [routerLink]="['company']" class="icon icon-sm rounded-circle border">
+                            <a [routerLink]="['company']"
+                               class="icon icon-sm rounded-circle border"
+                            >
                                 <i class="fa fa-briefcase"></i>
                             </a>
-
-                            <ng-template #orders>
-                                <a [routerLink]="['orders']" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
-                                <span class="badge badge-pill badge-danger notify">{{ getSumOrders$ | async }}</span>
-                            </ng-template>
                         </div>
 
                         <div class="widget-header icontext">
                             <div *ngIf="isAuthenticated$ | async; else loginTemplate"
                                  [ngClass]="collapseDropdown ? 'show' : null"
                                  (click)="showDropDown()"
-                                 class="dropdown d-inline-block">
+                                 class="dropdown d-inline-block"
+                            >
                                 <div class="icontext mr-4 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                     <div class="icon icon-sm rounded-circle border">
                                         <i class="fa fa-user"></i>
                                     </div>
 
-                                    <div class="text"
-                                         *ngIf="(userRole$ | async) as userRole"
+                                    <div *ngIf="(userRole$ | async) as userRole"
+                                        class="text"
                                     >
                                         {{ email$ | async }}
                                         <br/>
                                         Konto: <b>{{ userRole.name }}</b>
                                     </div>
-                                </div> <!-- iconbox // -->
+                                </div>
 
                                 <div
                                     [ngClass]="collapseDropdown ? 'show' : null"
@@ -112,7 +106,7 @@
 
                                     <div>
                                         <a [routerLink]="['login']">Zaloguj się</a> |
-                                        <a [routerLink]="['register']">Rejestracja</a>
+                                        <a [routerLink]="['register/owner']">Rejestracja</a>
                                     </div>
                                 </div>
                             </ng-template>

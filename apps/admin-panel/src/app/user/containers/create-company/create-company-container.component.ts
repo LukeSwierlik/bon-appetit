@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CommonsState } from '../../../+state/commons/commons.reducer';
-import { select, Store } from '@ngrx/store';
-import { formQuery } from '../../../+state/commons/commons.selectors';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { State } from '../../../+state';
-import { CreateCompany } from '../../../+state/company/company.actions';
-import { authQuery } from '../../../+state/auth/auth.selectors';
-import { AlertType } from '../../../components/alert/alert.component';
+import { select, Store } from '@ngrx/store';
+import { areasPoland, termsAndConditionals } from 'apps/admin-panel/src/constans';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { State } from '../../../+state';
+import { authQuery } from '../../../+state/auth/auth.selectors';
 import { ResetForm } from '../../../+state/commons/commons.actions';
-import { termsAndConditionals, areasPoland } from 'apps/admin-panel/src/constans';
+import { CommonsState } from '../../../+state/commons/commons.reducer';
+import { formQuery } from '../../../+state/commons/commons.selectors';
+import { CreateCompany } from '../../../+state/company/company.actions';
+import { AlertType } from '../../../components/alert/alert.component';
 
 @Component({
     selector: 'tin-create-company-container',
@@ -47,7 +47,7 @@ export class CreateCompanyContainerComponent {
         });
     }
 
-    onSubmit(): void {
+    public onSubmit(): void {
         if (this.registerCompanyForm.valid) {
             this.store.dispatch(ResetForm());
 
@@ -61,12 +61,12 @@ export class CreateCompanyContainerComponent {
                     })
                 );
 
-                // this.registerCompanyForm.reset();
+                this.registerCompanyForm.reset();
             });
         }
     }
 
-    showModal(): void {
+    public showModal(): void {
         this.openedModal = !this.openedModal;
     }
 }
