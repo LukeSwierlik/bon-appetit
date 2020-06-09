@@ -29,30 +29,32 @@ export class EditDishContainerComponent {
     readonly AlertType = AlertType;
 
     constructor(private formBuilder: FormBuilder, private store: Store<State>) {
-        this.selectedDish$.pipe(take(1)).subscribe(dish => {
-            this.dish = dish;
+        this.selectedDish$
+            .pipe(take(1))
+            .subscribe(dish => {
+                this.dish = dish;
 
-            const [firstIngredient, ...rest] = dish.ingredients;
+                const [firstIngredient, ...rest] = dish.ingredients;
 
-            this.editDishForm = this.formBuilder.group({
-                name: [dish.name, Validators.required],
-                imageUrl: [
-                    dish.imageUrl,
-                    [Validators.required, Validators.pattern('(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|png))(?:\\?([^#]*))?(?:#(.*))?')]
-                ],
-                price: [dish.price, Validators.required],
-                ingredients: this.formBuilder.array([this.createItem(firstIngredient.name)]),
-                template: [dish.template, Validators.required]
+                this.editDishForm = this.formBuilder.group({
+                    name: [dish.name, Validators.required],
+                    imageUrl: [
+                        dish.imageUrl,
+                        [Validators.required, Validators.pattern('(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*\\.(?:jpg|gif|png))(?:\\?([^#]*))?(?:#(.*))?')]
+                    ],
+                    price: [dish.price, Validators.required],
+                    ingredients: this.formBuilder.array([this.createItem(firstIngredient.name)]),
+                    template: [dish.template, Validators.required]
+                });
+
+                this.ingredients = this.editDishForm.get('ingredients') as FormArray;
+
+                this.initialIngredients(rest);
             });
-
-            this.ingredients = this.editDishForm.get('ingredients') as FormArray;
-
-            this.initialIngredients(rest);
-        })
     }
 
-    initialIngredients(ingredients: Ingredient[]) {
-        return ingredients.map(ingredient => {
+    initialIngredients(ingredients: Ingredient[]): void {
+        ingredients.map(ingredient => {
             this.ingredients.push(this.formBuilder.group({
                 name: ingredient.name
             }))

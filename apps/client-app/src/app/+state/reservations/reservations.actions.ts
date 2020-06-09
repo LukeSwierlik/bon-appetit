@@ -19,7 +19,6 @@ export const createReservationAction = (reservation: Reservation) => dispatch =>
 
     createReservation(reservation)
         .then(res => {
-            dispatch(createReservationSuccess(res.data));
             dispatch(sendFormSuccess());
         })
         .catch(e => {

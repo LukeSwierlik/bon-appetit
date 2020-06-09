@@ -38,7 +38,7 @@ export const reducer = createReducer(
         loaded: false
     })),
     on(SuccessLoadRestaurants, (state, action) => {
-        return restaurantsEntityAdapter.addAll(action.restaurants, {
+        return restaurantsEntityAdapter.setAll(action.restaurants, {
             ...state,
             loaded: true
         });

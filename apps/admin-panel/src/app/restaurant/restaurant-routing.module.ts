@@ -1,4 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
+import { CreateRestaurantContainerComponent } from '../company/containers/create-restaurant/create-restaurant-container.component';
 import { RestaurantLandingContainerComponent } from './containers/restaurant-landing/restaurant-landing-container.component';
 import { NgModule } from '@angular/core';
 import { RestaurantDetailsContainerComponent } from './containers/restaurant-details/restaurant-details-container.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
             { path: 'create-table', pathMatch: 'full', component: CreateTableContainerComponent },
             { path: 'tables', pathMatch: 'full', component: TablesContainerComponent },
             { path: 'reservations', pathMatch: 'full', component: RestaurantReservationsContainerComponent },
+            { path: 'create-restaurant', pathMatch: 'full', component: CreateRestaurantContainerComponent },
         ]
     }
 ];

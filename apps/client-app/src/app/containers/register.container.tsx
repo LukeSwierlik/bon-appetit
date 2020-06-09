@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Gender } from '@bon-appetit/interfaces';
 import classNames from 'classnames';
+import { registerAction } from '../+state/auth/auth.actions';
 import { InputFirstName } from '../components/register-inputs/InputFirstName';
 import { InputLastName } from '../components/register-inputs/InputLastName';
 import { RadioGender } from '../components/register-inputs/RadioGender';
@@ -47,15 +48,13 @@ type RegisterForm = {
     cvv: number;
 };
 
-
 export const Register = () => {
     const { register, handleSubmit, watch, errors, formState, clearError, reset } = useForm<RegisterForm>();
     const commons = useSelector((state: State) => state.commonsData);
     const dispatch = useDispatch();
 
     const onSubmit = (formData: RegisterForm): void => {
-        console.log('WYSLANE', formData);
-        // dispatch(registerAction(formData));
+        dispatch(registerAction(formData));
 
         clearError();
         reset();

@@ -44,6 +44,19 @@ export class OrderEntity {
     })
     count: number;
 
+    @ManyToOne(() => UserEntity)
+    @JoinColumn()
+    user: Promise<UserEntity>;
+
+    @ManyToOne(type => RestaurantEntity, restaurant => restaurant.orders)
+    @JoinColumn()
+    restaurant: Promise<RestaurantEntity>;
+
+    @ManyToOne(() => DishEntity, dish => dish.orders,
+        { cascade: true, eager: true })
+    @JoinColumn()
+    dish: DishEntity;
+
     @Column({
         type: 'integer',
         default: 0,
@@ -62,15 +75,5 @@ export class OrderEntity {
     })
     finished: Date;
 
-    @ManyToOne(() => UserEntity)
-    @JoinColumn()
-    user: Promise<UserEntity>;
 
-    @ManyToOne(type => RestaurantEntity, restaurant => restaurant.orders)
-    @JoinColumn()
-    restaurant: Promise<RestaurantEntity>;
-
-    @ManyToOne(() => DishEntity, dish => dish.orders, { cascade: true, eager: true })
-    @JoinColumn()
-    dish: DishEntity;
 }

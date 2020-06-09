@@ -1,7 +1,14 @@
 <section *ngIf="formStatus$ | async as formStatus" class="section-content">
-    <tin-alert *ngIf="formStatus.success" [type]="AlertType.SUCCESS" [message]="'Rejestracja powiodła się! Możesz się zalogować!'"> </tin-alert>
+    <tin-alert *ngIf="formStatus.success"
+               [type]="AlertType.SUCCESS"
+               [message]="'Rejestracja powiodła się!'">
+    </tin-alert>
 
-    <tin-alert *ngIf="formStatus.error" [type]="AlertType.DANGER" [message]="'Operacja nie powiodła sie, sprobuj wysłac ponownie formularz. Jezeli problem dalej wystepuje, zglos to do administracji!!'"> </tin-alert>
+    <tin-alert *ngIf="formStatus.error"
+               [type]="AlertType.DANGER"
+               [message]="'Operacja nie powiodła sie, sprobuj wysłac ponownie formularz. ' +
+                'Jezeli problem dalej wystepuje, zglos to do administracji!!'">
+    </tin-alert>
 
     <div class="card mx-auto">
         <article class="card-body">

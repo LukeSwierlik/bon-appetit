@@ -1,3 +1,4 @@
+import { CommonsState } from '../../../../admin-panel/src/app/+state/commons/commons.reducer';
 import { restaurantsReducer, RestaurantsState } from './restaurants/restaurants.reducer';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
@@ -5,7 +6,6 @@ import { authReducer, AuthState } from './auth/auth.reducer';
 import { dishesReducer, DishesState } from './dishes/dishes.reducer';
 import { ordersReducer, OrdersState } from './orders/orders.reducer';
 import { reservationsReducer, ReservationsState } from './reservations/reservations.reducer';
-import { CommonsState } from '../../../../shop/src/app/+state/commons/commons.reducer';
 import { commonsReducer } from './commons/commons.reducer';
 
 const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose || compose;

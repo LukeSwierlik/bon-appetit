@@ -1,8 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import { Restaurant, UpdateEntity } from '@bon-appetit/interfaces';
 
-export const LoadRestaurants = createAction('[Restaurant] Load Restaurant');
-export const SuccessLoadRestaurants = createAction('[Restaurant] Success Fetch Restaurant', props<{ restaurants: Restaurant[] }>());
+export const LoadRestaurants = createAction('[Restaurant] Load Restaurants');
+
+export const SuccessLoadRestaurants = createAction(
+    '[Restaurant] Success Fetch Restaurants',
+    props<{ restaurants: Restaurant[] }>())
+;
 
 export const CreateRestaurant = createAction('[Restaurant] Create Restaurant', props<{ createRestaurant: Restaurant; }>());
 export const SuccessCreateRestaurant = createAction('[Restaurant] Success Create Restaurant', props<{ restaurant: Restaurant; }>());

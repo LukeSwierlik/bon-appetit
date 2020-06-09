@@ -29,7 +29,6 @@ export const fetchAndSelectRestaurantAction = (restaurantId: number) => (dispatc
 
     getRestaurants()
         .then((res) => {
-            console.log('res data', res.data);
             dispatch(fetchRestaurantsSuccess(res.data));
             dispatch(selectedRestaurant(restaurantId));
 

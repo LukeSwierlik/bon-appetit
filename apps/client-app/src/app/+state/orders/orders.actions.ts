@@ -24,8 +24,6 @@ export const fetchOrdersAction = (userId: number) => (dispatch): void => {
 };
 
 export const addToOrderAction = (count: number, dishId: number, restaurantId: number, userId: number) => (dispatch): void => {
-    dispatch(addToOrder(count, dishId, restaurantId, userId));
-
     addOrder({
         count,
         dishId,

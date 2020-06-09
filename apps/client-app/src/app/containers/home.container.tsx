@@ -20,7 +20,7 @@ const HomeContainer = (props) => {
 
     return (
         <>
-            {/*<Hero />*/}
+            <Hero />
             <CardComponent
                 restaurants={props.restaurants}
                 onSelectRestaurant={onSelectRestaurant}

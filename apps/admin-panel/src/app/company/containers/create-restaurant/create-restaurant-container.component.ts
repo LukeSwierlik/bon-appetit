@@ -61,8 +61,6 @@ export class CreateRestaurantContainerComponent {
                         companyId
                     }
                 }));
-
-                // this.registerCompanyForm.reset();
             });
         }
     }

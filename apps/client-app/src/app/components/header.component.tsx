@@ -15,6 +15,7 @@ export const Header = () => {
     const [showSearch, setShowSearch] = useState(false);
 
     const user = useSelector((state: State) => state.authData.user);
+
     const sumOrder = useSelector((state: State) => {
         const orders = state.ordersData.orders;
 

@@ -9,9 +9,9 @@ import { Orders } from './containers/orders.container';
 import { useDispatch } from 'react-redux';
 import { checkLoginAction } from './+state/auth/auth.actions';
 import { UserDetails } from './containers/user-details.container';
+import { PrivateRoute } from './router/PrivateRoute';
 
 export const App = (props) => {
-    console.log('app props', props);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -25,8 +25,8 @@ export const App = (props) => {
                 <Route path="/login" component={LoginContainer} exact/>
                 <Route path="/register" component={Register} exact/>
                 <Route path="/restaurant/:id" component={Restaurant} exact/>
-                <Route path="/orders" component={Orders} exact/>
-                <Route path="/user" component={UserDetails}/>
+                <PrivateRoute path="/orders" component={Orders} exact/>
+                <PrivateRoute path="/user" component={UserDetails}/>
             </Switch>
         </Layout>
     );

@@ -12,6 +12,13 @@ export interface CreateReservation {
     reservation: Reservation;
 }
 
+export const createReservation = (reservation: Reservation): CreateReservation => {
+    return {
+        type: ReservationsActions.CREATE_RESERVATION,
+        reservation
+    }
+};
+
 export interface CreateReservationSuccess {
     type: typeof ReservationsActions.CREATE_RESERVATION_SUCCESS;
     reservation: Reservation;
@@ -25,13 +32,6 @@ export interface FetchReservationsSuccess {
     type: typeof ReservationsActions.FETCH_RESERVATIONS_SUCCESS;
     reservations: Reservation[];
 }
-
-export const createReservation = (reservation: Reservation): CreateReservation => {
-  return {
-      type: ReservationsActions.CREATE_RESERVATION,
-      reservation
-  }
-};
 
 export const createReservationSuccess = (reservation: Reservation): CreateReservationSuccess => {
     return {

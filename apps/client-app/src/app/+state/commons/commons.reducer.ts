@@ -1,6 +1,15 @@
-import { CommonsState } from '../../../../../shop/src/app/+state/commons/commons.reducer';
-import { CommonsActions, CommonsActionType } from './commons.types';
+import { CustomError } from '@bon-appetit/interfaces';
 import { updateObject } from '../../utility/utility';
+import { CommonsActions, CommonsActionType } from './commons.types';
+
+export interface CommonsState {
+    success: boolean;
+    error: boolean;
+    message: string;
+    loaded: boolean;
+    sendForm: boolean;
+    customError: CustomError | null;
+}
 
 const INITIAL_STATE: CommonsState = {
     success: false,

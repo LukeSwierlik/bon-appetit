@@ -54,7 +54,11 @@ const Restaurant = props => {
         <>
             {props.restaurant && (
                 <>
-                    <RestaurantDetails showDishes={showDishes} restaurant={props.restaurant} toggleReservationForm={toggleReservationForm} />
+                    <RestaurantDetails
+                        showDishes={showDishes}
+                        restaurant={props.restaurant}
+                        toggleReservationForm={toggleReservationForm}
+                    />
 
                     <div className="container">
                         <div className="row">

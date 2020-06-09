@@ -25,7 +25,6 @@ export class OrderService {
     }
 
     async findAllOrdersRestaurant(restaurantId: number): Promise<OrderEntity[] | undefined> {
-        console.log('restaurantId', restaurantId);
         const ordersEntity = await this.ordersRepository.find({ restaurantId });
 
         const ids = ordersEntity.map(order => {
