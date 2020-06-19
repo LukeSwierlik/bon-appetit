@@ -33,7 +33,7 @@ import { CategoryModule } from './category/category.module';
             host: 'localhost',
             port: 3306,
             username: 'root',
-            password: 'holy1593',
+            password: '',
             database: 'tin',
             entities: [RestaurantEntity, UserEntity, DishEntity, IngredientEntity, OrderEntity, CompanyEntity, TableEntity, ReservationEntity, EmployeeEntity, WaiterEntity, CookEntity, DelivererEntity, PaymentEntity, OwnerEntity, CategoryEntity],
             synchronize: true,
