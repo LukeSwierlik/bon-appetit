@@ -51,7 +51,7 @@
     "@types/react-redux": "^7.1.7",
     "angular2-text-mask": "^9.0.0",
     "axios": "^0.19.2",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "bootstrap": "^4.4.1",
     "bootstrap-icons": "^1.0.0-alpha3",
     "class-validator": "^0.11.1",
